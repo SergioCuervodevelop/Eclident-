@@ -1,0 +1,54 @@
+{% load socialaccount %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login con Google - Eclident</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="{% static 'inicio/estilos/login.css' %}" rel="stylesheet" />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 mx-auto">
+                <div class="myform form">
+                    <div class="logo mb-3">
+                        <div class="col-md-12 text-center">
+                            <img src="{% static 'inicio/logoblanco.png' %}" alt="Logo de Login" />
+                        </div>
+                    </div>
+                    <h1 class="login-page-title">Accede a tu cuenta</h1>
+                    
+                    <div class="text-center mt-4">
+                        <p class="mb-3">Completar tu registro con Google</p>
+                        <a href="{% provider_login_url "google" %}" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 14px; text-transform: uppercase; font-weight: bold; border-radius: 50px;">
+                            <i class="fa fa-google-plus"></i> Continuar con Google
+                        </a>
+                    </div>
+
+                    <div class="col-md-12 ">
+                        <div class="login-or">
+                            <hr class="hr-or">
+                            <span class="span-or">O</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-3">
+                        <p class="text-center">
+                            <a href="{% url 'login' %}" class="text-primary">Volver al inicio de sesión</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

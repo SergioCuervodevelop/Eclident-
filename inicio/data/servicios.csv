@@ -1,0 +1,192 @@
+﻿Item;Cups;Descripción ;Mebresias ;Particular
+1;227101;Cierre de fistula oroantral;695,604;904,285
+2;230101;Exodoncia de diente permanente unirradicular;105,47;138,411
+3;230102;Exodoncia de diente permanente multirradicular;124,215;161480
+4;230201;Exodoncia de diente temporal unirradicular;65000;84500
+5;230202;Exodoncia de diente temporal multirradicar;78000;101400
+6;231100;Exodoncia quirurgica uniradicular sod;152000;197600
+7;231200;Exodoncia quirurgica multirradicular sod;188500;245050
+8;231301;Exondociade incluido en posicion ectopica con abordaje intraoral ;498137;647578
+9;231303;Exodoncia de diente incluido ;290000;377000
+10;231500;Ventana quirurgica-colgajo desplazado para aordaje de deiente retenido con boton ;441353;573750
+11;23210209;Obturación dental con resina de fotocurado gama convecional ;99372;129184
+12;232300;Colocación de pin milimetrico sod;230000;299000
+13;234101;Colocación o aplicación de corona en acero inoxidable (para dientes temporales);263900;343070
+14;234103;Colocació o aplicación de corona en forma plastica;263900;343070
+15;234201;Colocación o inserción  de protesis fija x unidad (pilar o ponticos);979524;1273381
+16;234203;Patron de nucleo ;269724;350641
+17;234301;Inserc. Adapt.control protesis removible parcial (sup o inf) Mucosoportada;990000;1287000
+18;234302;Inserc. Adapt.control protesis removible parcial (sup o inf) Dentomucosoportada;990000;1287000
+19;234303;Inserc. Adapt.control protesis removible flexible ;1100000;1430000
+20;236302;Implante dental aloplastico (oseointegracion) sod gama convencional ;1950000;2535000
+21;236301;Implante dental aloplastico (oseointegracion) sod gama media;2250000;2925000
+22;236300;Implante dental aloplastico (oseointegracion)sod gama alta;2500000;3250000
+23;237101;Pulpotomia  con pulpectomia ;224770;292201
+24;237102;Pulpotomia ;198744;258367
+25;237301;Terapia de conducto radicular en diente uniraradicular ;290000;377000
+26;237302;Terapia de conducto radicular en diente birradicular ;390000;507000
+27;237303;Terapia de conducto radicular en diente multirradicular ;490000;637000
+28;237304;Terapia de conducto radicular en diente temporal unirradicular;269724;350641
+29;237305;Terapia de conducto radicular en diente temporal multirradicular;269724;350641
+30;237401;Curetaje apical con apicectomia y obturacion retrogada (cirugia perirradicular);1121484;1457929
+31;237901;Blanquiamiento de diente (intriseco) por causas endodonticas ;290000;377000
+32;240300;Alisado radicular campo cerrado sod por cuadrante ;160000;208000
+33;241101;Biopsia incisional de encia;411684;535189
+34;241104;Biopsia de encia;411684;535189
+35;242102;Plastia mucoginival con injerto gingival libre por diente ;420000;546000
+36;242201;Curetaje a campo abierto por diente ;390000;507000
+37;243400;Gingivectomia;145000;188500
+38;243502;Operculectomia;180000;234000
+39;247402;Ferulización semirigia (superior o inferior ) por arcada;360000;468000
+40;249100;Control de hemorragia dental pos quirurgica sod;127764;166093
+41;250002;Biopsia incisional de legua (en cuña);553644;719737
+42;274100;Frenillectomia labial sod;369096;479825
+43;870112;Radiografia maxilar superior;45000;58500
+44;870113;Radiografia maxilar inferior;45000;58500
+45;870114;Radiografia panoramica de maxiilares suerior e inferior ortopantomografia ;45000;58500
+46;870131;Radiografia de articulacón temporomaxilar atm;45000;58500
+47;870440;Radiografias intraorales oclusales ;49686;64592
+48;870451;Radiografias intraorales periapicales dientes anteriores superiores ;10000;13000
+49;870453;Radiografias intraorales periapicales zona de caninos;10000;13000
+50;870454;Radiografias intraorales periapicales premolares;10000;13000
+51;870455;Radiografias intraorales periapicales morales ;10000;13000
+52;870456;Radiografias intraorales periapicales juego completo;112148;145793
+53;870460;Radiografias intraorales coronales ;10000;13000
+54;890304;Consulta de control o seguimiento por otras esspecialidades en odontologia ;0;80000
+55;893101;Impresion de arco dentario superior o inferior, con modelo de estudio y concepto ;30000;39000
+56;893104;Estudio de oclusion y articulacion temporomandibular ;190000;247000
+57;997102;Aplicación de sellantes de fotocurado ;32500;42250
+58;997105;Aplicación  de resina preventiva ;32500;42250
+59;1001;Membresia personal ;60000;
+60;1002;Membresia familiar (5);240000;
+61;1003;Renovación personal ;50000;
+62;1004;Renovación familiar;200000;
+63;2313031;Exodoncia de diente semi-incluido ;190000;247000
+64;23210211;Superficie adicional gama convencional ;27300;35490
+65;2321022;Obturacion dental con resina de fotocurado gama m ;158995;206694
+66;23210231;Superficie adicional gama media ;42588;55364
+67;23210241;Obturación dental con resina de fotocurado gama alta;220000;286000
+68;2321025;Superficie adicional gama alta ;56784;73819
+69;232403000;Carilla veenner en ceromeros ;1100000;1430000
+70;23240800;Blanquiamiento dental 3 sesiones ;590000;767000
+71;2341051;Temporal o provesional (laboratorio) perfil estetico;190000;247000
+72;23434100;Temporal o provesional para coronas inmediatas ;134067;175321
+73;23420110;Acrer de una unidad ;794976;1033469
+74;23420111;Corona sobre implante en zirconio ;1300000;1690000
+75;23420115;Corona en zirconio ;1300000;1690000
+76;23420112;Retiro de coronas de metal;127764;166093
+77;23420113;Retiro de coronas zirconio;169000;219700
+78;23420114;Corona completa en ceromero;1250000;1625000
+79;23420117;Corona metal base collar less;1250000;1625000
+80;23420118;Cementación temporal por unidad;85170;110729
+81;23420119;Cementación definitiva por unidad ;113568;147638
+82;234220120;Perforación de corona ;85170;110729
+83;2342013;Carilla estetica en anteriores porcelana;1259000;1636700
+84;2342015;Incrustaciones en zirconio;920000;1196000
+85;23420311;Pulverizacion de nucleo;227136;295277
+86;23420321;Reconstruccion de muñones ;255520;332186
+87;2342033;Poste en fibra de vidrio ;269724;350641
+88;2343011;Protesis transitoria ;590000;767000
+89;2343012;Sobre dentadura sobre implantes (cazoleta y-nylon);1790000;2327000
+90;2343013;Protesis hibrida;14500000;18850000
+91;2343021;proteisis removible dutarone sup o inf;1300000;1690000
+92;23420134;Lentes en dislicato de litio;1419600;1845480
+93;2343031;Reparacion de protesis total o parcial ;170000;221000
+94;2344021;Proteisis total sup o inf diente acrilico ;979524;1273381
+95;2344023;Protesis total sup o inf diente duratone;1263444;1642477
+96;2344024;Gancho o rejilla para protesis;113568;147638
+97;2363003;Tornillo de cicatrizacion gama convencional ;224770;292201
+98;2363004;Tornillo de cicatrizacion gama media;224770;292201
+99;2363005;Tornillo de cicatrizacion gama alta ;295750;384475
+100;2363006;Abutment gama convencional ;690000;897000
+101;2363007;Abutment gama media;790000;1027000
+102;2363008;Abutment gama alta;890000;1157000
+103;2363009;Mini implante;610428;793556
+104;237201;Apexificacion  apexogenesis cada una;130000;169000
+105;23730002;Desobturacion;127764;166093
+106;23740111;Cirugia exploratoria uni o multirradicular;695604;904285
+107;23740121;Sellado de perforacion;430000;559000
+108;2379031;Blanqueamiento cada sesion;124215;161480
+109;2421021;Hueso liofilizado medio gramo;472017;613622
+110;2421022;Membrana biologica ;790000;1027000
+111;2434003;Alargamiento coronal sin osteotomia cada diente;184548;239912
+112;2434004;Alargamiento coronal con osteotomia cada diente;298116;387551
+113;247100101;Placa protectora acetato;106470;138411
+114;247100111;Placa para niños con 1 tornillo superior o inferior ;590000;767000
+115;24710012;Placa para niños con 2 tornillo superior o inferior ;690000;897000
+116;247100131;Placa para niños con 3 tornillo superior o inferior ;790000;1027000
+117;247100141;Placa bi-maxilar para niños con 1 tornillo;890000;1157000
+118;247100151;Retenedor de arco continuo superior o inferior ;255528;332186
+119;247100161;Retenedor de acetato sup  o inf (Obsequio ortodoncia );106470;138411
+120;24710017;Retenedor fijo cada punto;80000;104000
+121;247100171;Barra transpalatina con boton;343070;445991
+122;24710019;Reparacion brakets arco recto;14900;19370
+123;24710020;Reparacion brakets mbt;29900;38870
+124;24710021;Reparacion brakets estetico ;91000;118300
+125;24710022;Reparacion braket autoligado metalico;104000;135200
+126;247100231;Reparacion braket autoligado ceramico;117000;152100
+127;24710024;Retiro de ortondoncia (solicitado por paciente );185258;240835
+128;24710025;Desprogramador anterior ;269724;350641
+129;24710026;Placa de magnamara;890000;1157000
+130;2471003;Boton de nance con rejilla ;454272;590554
+131;2471004;Rejilla palatina o lingual ;323869;421030
+132;2471005;Hyrax;890000;1157000
+133;2471006;Mantenedor de espacio;377000;490100
+134;2471007;Re-educadores linguales o espolones linguales;60000;78000
+135;247102701;Colocacion de ortodoncia arco recto c/u 2;200000;260000
+136;247102702;Colocacion de ortodoncia mbt c/u 2;280000;364000
+137;247102703;Colocacion de ortodoncia estetico c/u 2;300000;390000
+138;247102704;Colocacion de ortodoncia autoligado metalico couta inicial;1700000;2210000
+139;247102705;Colocacion de ortodoncia autoligado ceramico couta inicial;2200000;2860000
+140;247102706;Ortodoncia invisible (alineadores ) 1 mes ;3500000;4550000
+141;247102707;Ortodoncia invisible (alineadores) 3 mes;2175000;2827500
+142;247102708;Ortodoncia invisible (alineadores) 6 mes;2175000;2827500
+143;247170;Boton de nance ;343070;445991
+144;2473001;Placa neuromiorelajante activada - incluye 3 controles;638820;830456
+145;2473002;Placa neuromiorelajante conflort plus activada ;1200000;1560000
+146;2473003;Control de placa neuromiorelajante;90000;117000
+147;2473004;Tallado selectivo;390000;507000
+148;2488001;Mascara facial;768950;999635
+149;2500021;Biopsia de lengua abierta o incisional con estudio de coloracion;780780;1015014
+150;89010101;Cotizacion inicial;0;0
+151;8902031;Certificado odontologia general ;42588;55364
+152;8902032;Certificado odontologia especializada;180000;234000
+153;890204;Consulta especializada;0;180000
+154;8903031;Consulta general;0;80000
+155;8931061;Control de ortodoncia sin plan ;99900;129870
+156;9902120;Fisioterapia oral por sesiones ;93600;121680
+157;99730200;Detartaje supragingival x cuadrante;99372;129184
+158;997501;Profilaxis dental (obsequio menbresia);0;0
+159;99750101;Profilaxis preprotesica;120000;156000
+160;89310611;Control de ortodoncia fija- arco recto 24 coutas;96300;125190
+161;8931062;Control de ortodoncia fija mbt 20 coutas;119900;155870
+162;8931063;Control de ortodoncia fija estetico 20 coutas;128300;166790
+163;8931064;Control de ortodoncia fija autoligado metalico 15 coutas;251400;326820
+164;89310641;Control de ortodoncia fija autoligado ceramico 15 coutas ;279000;362700
+165;973400;Extraccion de aparatologia ortodontica fija sod ;180000;234000
+166;893106;Control de ortodoncia fija removible o tratamiento ortopedico funcional y mecanico ;83000;107900
+167;870002;Perfilograma con cefalometria;149000;193700
+168;870003;Perfilograma ;110000;143000
+169;870004;Estudios iniciales ;75000;97500
+170;23430303;Incrustaciones en zirconio;890000;1157000
+171;242401;Injerto oseo (procedimiento);490000;637000
+172;23430302;Complementario protesis flexible (eps);400000;
+173;23430304;Complementario protesis diente super c (eps);300000;
+174;245100;Regularizacion de reborde de 2 a 4 dientes ;290000;377000
+175;2473005;Complementarios placa miorelajante digitalizacion (eps) confort plus activa siliconada;400000;
+176;237330301;Complementario endodoncia multiradicular (eps);400000;
+177;23730101;Complementario endodoncia birradicular (eps);300000;
+178;23730201;Complementario endodoncia unirradicular (eps);200000;
+179;E412361;Anestesia para procedimientos de salud oral en adulto con condicion especial;7200000;9360000
+180;24110101;Toma de biopsia;420000;546000
+181;24110102;Estudio de biopsia;430000;559000
+182;237601;Fistulizacion endodontica;290000;377000
+183;23740101;Porcion mta;450000;585000
+184;23420116;Complementario corona zirconio eps;600000;
+185;2342014;Carilla estetica en resina;350000;455000
+;;;;
+;;;;
+;;;;
+;;;;
+;;;;
+;;;;

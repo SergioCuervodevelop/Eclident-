@@ -1,0 +1,123 @@
+<!-- Carga de recursos estáticos y externos -->
+{% load static %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="{% static 'inicio/estilos/login.css' %}" rel="stylesheet" />
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<!-- Estructura del cuerpo de la página -->
+<body>
+    
+    
+    <!-- Contenedor principal centrado -->
+    <div class="container">
+        <div class="row">
+			<div class="col-md-5 mx-auto">
+			<!-- Sección de Login -->
+			<div id="first">
+				<div class="myform form ">
+					 <div class="logo mb-3">
+						 <div class="col-md-12 text-center">
+							<img src="{% static 'inicio/logoblanco.png' %}" alt="Logo de Login" />
+						 </div>
+					</div>
+                 <h1 class="login-page-title">Accede a tu cuenta</h1>
+                   <!-- Formulario de inicio de sesión -->
+                   <form action="" method="post" name="login">
+                           {% csrf_token %} <!-- Token de seguridad de Django para prevenir CSRF -->
+                           {% if mensaje %} <!-- Muestra mensaje de error si existe -->
+                           <div class="alert alert-danger" role="alert">
+                               {{ mensaje }}
+                           </div>
+                        
+                           {% endif %}
+                           <div class="form-group">
+                              <label for="exampleInputEmail1">Email</label>
+                              <input type="email" name="email"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Ingrese su email">
+                           </div>
+                           <div class="form-group">
+                              <label for="exampleInputEmail1">Contraseña</label>
+                              <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Ingrese su contraseña">
+                           </div>
+                           <div class="col-md-12 text-center ">
+                              <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Iniciar sesión</button>
+                           </div>
+                           <div class="pt-3">
+                              <p class="text-center"> <a href="#">He olvidado mi contraseña</a> </p>
+                           </div>
+                           <div class="col-md-12 ">
+                              <div class="login-or">
+                                 <hr class="hr-or">
+                                 <span class="span-or">O</span>
+                              </div>
+                           </div>
+                           <div class="col-md-12 mb-3">
+                              <p class="text-center">
+                                 <a href="{% url 'google_login_custom' %}" class="google btn mybtn"><i class="fa fa-google-plus">
+                                 </i> Regístrate usando Google.
+                                 </a>
+                              </p>
+                           </div>
+                           <div class="form-group">
+                              <p class="text-center">¿Todavía no tiene cuenta? <a href="#" id="signup"> Regístrate </a></p>
+                           </div>
+                        </form>
+                 
+				</div>
+			</div>
+			  <!-- Sección de Signup -->
+			  <div id="second">
+			      <div class="myform form ">
+                        <div class="logo mb-3">
+						         <div class="col-md-12 text-center">
+							         <img src="{% static 'inicio/logoblanco.png' %}" alt="Logo de Login" />
+						      </div>
+					</div>
+                 <h1 class="login-page-title">Crear Cuenta</h1>
+                        <!-- Formulario de registro -->
+                        <form action="#" name="registration">
+                           <div class="form-group">
+                              <label for="exampleInputEmail1">Nombre</label>
+                              <input type="text"  name="firstname" class="form-control" id="firstname" aria-describedby="emailHelp" placeholder="Ingrese su nombre">
+                           </div>
+                           <div class="form-group">
+                              <label for="exampleInputEmail1">Apellido</label>
+                              <input type="text"  name="lastname" class="form-control" id="lastname" aria-describedby="emailHelp" placeholder="Ingrese su apellido">
+                           </div>
+                           <div class="form-group">
+                              <label for="exampleInputEmail1">Email</label>
+                              <input type="email" name="email"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Ingrese su email">
+                           </div>
+                           <div class="form-group">
+                              <label for="exampleInputEmail1">Contraseña</label>
+                              <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Ingrese su contraseña">
+                           </div>
+                           <div class="col-md-12 text-center mb-3">
+                              <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Registrate gratuitamente</button>
+                           </div>
+                           <div class="form-terminos">
+                              <p class="text-center"> Al registrarte, confirmas que estás de acuerdo con nuestros <a href="#">términos y condiciones</a> y que entiendes nuestras <a href="#">políticas de privacidad.</a> </p>
+                           </div>
+
+                           <div class="col-md-12 ">
+                              <div class="form-group">
+                                 <p class="text-center"><a href="#" id="signin">¿Ya tienes una cuenta?</a></p>
+                              </div>
+                           </div>
+                            </div>
+                        </form>
+                     </div>   
+			</div>
+		</div>
+      </div>
+      
+      <!-- Título elegante debajo del formulario -->
+    
+      
+    <script src="{% static 'inicio/js/login.js' %}"></script>
+</body>

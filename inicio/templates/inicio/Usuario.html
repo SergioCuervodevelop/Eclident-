@@ -1,0 +1,223 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Perfil - Eclident</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{% static 'inicio/estilos/styles.css' %}" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #7b766f 0%, #e9e6e5b6 100%);
+            min-height: 100vh;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        .perfil-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .perfil-header {
+            background: linear-gradient(to bottom, #0311d1 0%, #69b4df 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        .perfil-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            display: block;
+        }
+        .perfil-nombre {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .perfil-email {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        .perfil-seccion {
+            margin-bottom: 2rem;
+        }
+        .perfil-seccion h3 {
+            color: #0311d1;
+            font-weight: bold;
+            border-bottom: 2px solid #0311d1;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .perfil-item {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .perfil-label {
+            font-weight: bold;
+            color: #333;
+        }
+        .perfil-valor {
+            color: #0311d1;
+        }
+        .btn-personalizado {
+            background: linear-gradient(to bottom, #0311d1 0%, #69b4df 100%);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-personalizado:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 15px rgba(3, 17, 209, 0.3);
+            color: white;
+        }
+        .citas-list {
+            list-style: none;
+            padding: 0;
+        }
+        .cita-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid #0311d1;
+        }
+        .navbar-custom {
+            background: white;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .logo-img {
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'inicio' %}">
+                <img src="{% static 'inicio/Logoeclident.png' %}" alt="Eclident Logo" class="logo-img" />
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/accounts/logout/">Cerrar sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="container">
+        <div class="perfil-container">
+            <!-- Header del perfil -->
+            <div class="perfil-header">
+                {% if google_profile.foto %}
+                    <img src="{{ google_profile.foto }}" alt="Avatar" class="perfil-avatar">
+                {% else %}
+                    <div class="perfil-avatar" style="background: #69b4df; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
+                        <i class="fa fa-user"></i>
+                    </div>
+                {% endif %}
+                
+                {% if google_profile.nombre_completo %}
+                    <div class="perfil-nombre">{{ google_profile.nombre_completo }}</div>
+                {% else %}
+                    <div class="perfil-nombre">{{ usuario.first_name }} {{ usuario.last_name }}</div>
+                {% endif %}
+                
+                <div class="perfil-email">{{ usuario.email }}</div>
+            </div>
+
+            <!-- Sección de información personal -->
+            <div class="perfil-seccion">
+                <h3><i class="fa fa-user-circle"></i> Información Personal</h3>
+                
+                <div class="perfil-item">
+                    <span class="perfil-label">Usuario:</span>
+                    <span class="perfil-valor">{{ usuario.username }}</span>
+                </div>
+                
+                <div class="perfil-item">
+                    <span class="perfil-label">Email:</span>
+                    <span class="perfil-valor">{{ usuario.email }}</span>
+                </div>
+                
+                {% if google_profile %}
+                <div class="perfil-item">
+                    <span class="perfil-label">Registrado con:</span>
+                    <span class="perfil-valor"><i class="fa fa-google"></i> Google</span>
+                </div>
+                
+                <div class="perfil-item">
+                    <span class="perfil-label">Fecha de registro:</span>
+                    <span class="perfil-valor">{{ google_profile.fecha_registro|date:"d/m/Y H:i" }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sección de acciones -->
+            <div class="perfil-seccion">
+                <h3><i class="fa fa-tasks"></i> Acciones Rápidas</h3>
+                
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="{% url 'agenda' %}" class="btn-personalizado">
+                        <i class="fa fa-calendar"></i> Agendar Cita
+                    </a>
+                    <a href="{% url 'blog' %}" class="btn-personalizado" style="background: linear-gradient(to bottom, #69b4df 0%, #b0d4e3 100%);">
+                        <i class="fa fa-newspaper-o"></i> Leer Blog
+                    </a>
+                    <a href="{% url 'contacto' %}" class="btn-personalizado" style="background: linear-gradient(to bottom, #e08a6f 0%, #f0b8a0 100%);">
+                        <i class="fa fa-envelope"></i> Contactar
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sección de seguridad -->
+            <div class="perfil-seccion">
+                <h3><i class="fa fa-lock"></i> Seguridad</h3>
+                
+                <div class="perfil-item">
+                    <span class="perfil-label">Sesión activa:</span>
+                    <span class="perfil-valor">✅ Conectado</span>
+                </div>
+                
+                <div style="margin-top: 1rem;">
+                    <a href="/accounts/logout/" class="btn-personalizado" style="background: linear-gradient(to bottom, #d9534f 0%, #e88e87 100%);">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </div>
+
+            <!-- Enlace de retorno -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="{% url 'inicio' %}" style="color: #0311d1; text-decoration: none; font-weight: bold;">
+                    <i class="fa fa-arrow-left"></i> Volver al inicio
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

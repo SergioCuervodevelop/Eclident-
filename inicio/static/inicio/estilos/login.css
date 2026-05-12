@@ -1,0 +1,146 @@
+     body{
+        padding-top: 1rem;
+		padding-bottom: 1rem;
+	    background: linear-gradient(to bottom, #7b766f 0%, #e9e6e5b6 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        }
+        a{
+         text-decoration:none !important;
+         }
+         h1,h2,h3{
+         font-family: 'Kaushan Script', cursive;
+         }
+          .myform{
+		position: relative;
+		display: -ms-flexbox;
+		display: flex;
+		padding: 2rem;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		width: 100%;
+		pointer-events: auto;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid rgba(0,0,0,.2);
+		border-radius: 1.1rem;
+		outline: 0;
+		max-width: 600px;
+		 }
+         .tx-tfm{
+         text-transform:uppercase;
+         }
+         .mybtn{
+         border-radius:50px;
+         }
+        
+         .login-or {
+         position: relative;
+         color: #6f717b;
+         margin-top: 10px;
+         margin-bottom: 10px;
+         padding-top: 10px;
+         padding-bottom: 10px;
+         }
+         .span-or {
+         display: block;
+         position: absolute;
+         left: 50%;
+         top: -2px;
+         margin-left: -25px;
+         background-color: #e2dfdf;
+         width: 50px;
+         text-align: center;
+         }
+         .hr-or {
+         height: 1px;
+         margin-top: 0px !important;
+         margin-bottom: 0px !important;
+         }
+         .google {
+         color:#0522e0;
+         width:100%;
+         height:40px;
+         text-align:center;
+         outline:none;
+         border: 1px solid rgb(88, 115, 236);
+         }
+          form .error {
+         color: #ff0000;
+         }
+         #second{display:none;}
+         
+         /* Estilos para el logo - hacerlo más notorio */
+         .logo {
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             padding: 20px 15px;
+             background: linear-gradient(to bottom, #0311d1 0%, #69b4df 100%);
+             border-radius: 15px 15px 0 0;
+             margin: -2rem -2rem 25px -2rem;
+             min-height: 100px;
+         }
+         
+         .logo img {
+             max-width: 150px;
+             height: auto;
+             width: 100%;
+             object-fit: contain;
+             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+         }
+         
+         /* Espaciado aumentado para los elementos del formulario */
+         .form-group {
+             margin-bottom: 1.5rem !important;
+         }
+         .form-terminos {
+             margin-top: 0.5rem;
+             font-size: 0.7rem;
+             color: #555;
+         }
+         /* Título elegante debajo del formulario */
+         .login-page-title {
+             margin-top: -1rem;
+             margin-bottom: 10px;
+             text-align: center;
+             font-size: 2rem;
+             font-weight: 500;
+             color: #141414;
+             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+             letter-spacing: -0.5px;
+         }
+
+         /* Estilos para Google Sign-In SDK */
+         #g_id_signin {
+             width: 100% !important;
+             display: flex;
+             justify-content: center;
+         }
+
+         /* Contenedor del botón de Google */
+         div[data-client_id] {
+             display: flex;
+             justify-content: center;
+             width: 100%;
+         }
+
+         /* Ajusta el tamaño del botón de Google */
+         .g_id_signin iframe {
+             width: 100% !important;
+             max-width: 100% !important;
+         }
+
+         /* Estilos responsive */
+         @media (max-width: 600px) {
+             .myform {
+                 padding: 1.5rem;
+             }
+
+             .login-page-title {
+                 font-size: 1.5rem;
+             }
+         }

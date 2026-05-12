@@ -1,0 +1,68 @@
+{% extends "inicio/base.html" %}
+{% load static %}
+
+{% block title %}Agendar Cita - Eclident{% endblock %}
+
+{% block extra_head %}
+<style>
+    :root { --primary-blue: #2c3e50; --light-bg: #f8fbff; }
+    body { background-color: var(--light-bg); font-family: sans-serif; }
+    .navbar { background-color: white; padding: 10px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .navbar-brand img { height: 50px; }
+    .form-container { background: white; border-radius: 15px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 40px; margin-bottom: 40px;}
+    .btn-custom { background-color: #008ed6; color: white; font-weight: bold; padding: 12px; border-radius: 8px; width: 100%; border: none;}
+    .btn-custom:hover { background-color: #0073ad; color: white;}
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6 form-container">
+                <h2 class="text-center fw-bold mb-4" style="color: var(--primary-blue);">🦷 Agendar Nueva Cita</h2>
+                
+                {% if mensaje %}
+                    <div class="alert {% if exito %}alert-success{% else %}alert-danger{% endif %} text-center fw-bold" role="alert">
+                        {{ mensaje }}
+                    </div>
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <h5 class="mb-3 text-secondary border-bottom pb-2">Datos del Paciente</h5>
+                    <div class="mb-3"><input type="text" class="form-control" name="nombre" placeholder="Nombre completo" required></div>
+                    
+                    <div class="row mb-3">
+                        <div class="col"><input type="number" class="form-control" name="cedula" placeholder="Cédula (Solo números)" required></div>
+                        <div class="col"><input type="number" class="form-control" name="celular" placeholder="Celular" required></div>
+                    </div>
+                    
+                    <div class="mb-3"><input type="email" class="form-control" name="correo" placeholder="Correo electrónico" required></div>
+                    <div class="mb-4"><input type="text" class="form-control" name="direccion" placeholder="Dirección" required></div>
+
+                    <h5 class="mb-3 text-secondary border-bottom pb-2">Detalles de la Consulta</h5>
+                    <div class="row mb-3">
+                        <div class="col"><input type="date" class="form-control" name="fecha" required></div>
+                        <div class="col"><input type="time" class="form-control" name="hora" required></div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <select class="form-select" name="tratamiento_id" required>
+                            <option value="" disabled selected>Haga clic para elegir su tratamiento...</option>
+                            
+                            {% for t in tratamientos %}
+                                <option value="{{ t.0 }}">ID: {{ t.0 }} - {{ t.1 }}</option>
+                            {% endfor %}
+                            
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-custom">Confirmar Cita Segura</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

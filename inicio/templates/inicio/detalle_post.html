@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ post.titulo }}</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            background: #f4f6f9;
+        }
+
+        .container {
+            width: 80%;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #0d6efd;
+        }
+
+        .fecha {
+            color: gray;
+            font-size: 14px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background: #0d6efd;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>{{ post.titulo }}</h1>
+    <p class="fecha">{{ post.fecha }}</p>
+
+    {% if post.imagen %}
+        <img src="{{ post.imagen.url }}">
+    {% endif %}
+
+    <p>{{ post.contenido }}</p>
+
+    <a href="/blog/">← Volver al blog</a>
+
+</div>
+
+</body>
+</html>

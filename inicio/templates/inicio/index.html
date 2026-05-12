@@ -1,0 +1,375 @@
+{% extends "inicio/base.html" %}
+{% load static %}
+
+{% block title %}Eclident - Clínica Dental{% endblock %}
+
+{% block content %}
+
+    <!-- Sección hero con título principal y galería de imágenes -->
+    <header class="seccion-principal">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-7 text-start">
+            <h1 class="display-4 fw-bold text-primary">El sueño de tu sonrisa se puede volver realidad</h1>
+            <p class="lead text-muted mt-4">Tecnología de última generación y atención humanizada.</p>
+            <a href="/agenda/" class="btn btn-primary btn-lg mt-3 mb-4 shadow">Agendar cita ahora</a>
+          </div>
+
+          <div class="col-md-5">
+            <div class="row g-3">
+              <div class="col-6"><img src="{% static 'inicio/Sonrisa1.jpeg' %}" class="img-fluid rounded shadow ani-float-1 seccion-img-grid" /></div>
+              <div class="col-6"><img src="{% static 'inicio/Sonrisa2.webp' %}" class="img-fluid rounded shadow ani-float-2 seccion-img-grid" /></div>
+              <div class="col-6"><img src="{% static 'inicio/Sonrisa3.webp' %}" class="img-fluid rounded shadow ani-float-2 seccion-img-grid" /></div>
+              <div class="col-6"><img src="{% static 'inicio/Sonrisa4.webp' %}" class="img-fluid rounded shadow ani-float-1 seccion-img-grid" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sección de servicios / tratamientos con tarjetas -->
+    <section class="container my-5 text-center">
+      <h2 class="mb-5 fw-bold" style="color: #1a237e">Nuestros tratamientos</h2>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card card-service shadow-sm p-4 h-100">
+            <div class="mb-3" style="font-size: 2.2rem;">
+            😁
+            </div>
+            <h3 class="text-primary">Estética</h3>
+            <p class="text-dark fw-semibold">Desde <span class="fs-3">30,10€</span>/mes</p>
+            <p class="text-muted">Mejoramos apariencia, forma y color de tu sonrisa con blanqueamiento y carillas.</p>
+            <a class="btn btn-primary btn-sm mt-auto" href="#">Iniciar tratamiento</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card card-service shadow-sm p-4 h-100">
+            <div class="mb-3" style="font-size: 2.2rem;">
+            🦷
+            </div>
+            <h3 class="text-warning">Implantología</h3>
+            <p class="text-dark fw-semibold">Desde <span class="fs-3">37,35€</span>/mes</p>
+            <p class="text-muted">Reemplazamos dientes perdidos con implantes de calidad y recuperación segura.</p>
+            <a class="btn btn-primary btn-sm mt-auto" href="#">Iniciar tratamiento</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card card-service shadow-sm p-4 h-100">
+            <div class="mb-3" style="font-size: 2.2rem;">
+              🪥
+            </div>
+            <h3 class="text-info">Periodoncia</h3>
+            <p class="text-dark fw-semibold">Consulta personalizada</p>
+            <p class="text-muted">Diagnóstico y tratamiento de encías para prevenir gingivitis y periodontitis.</p>
+            <a class="btn btn-primary btn-sm mt-auto" href="#">Iniciar tratamiento</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card card-service shadow-sm p-4 h-100">
+            <div class="mb-3" style="font-size: 2.2rem;">
+              🧩
+            </div>
+            <h3 class="text-success">Prótesis dentales</h3>
+            <p class="text-dark fw-semibold">Consulta personalizada</p>
+            <p class="text-muted">Opciones con coronas de zirconio para restablecer función y estética dental.</p>
+            <a class="btn btn-primary btn-sm mt-auto" href="#">Iniciar tratamiento</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Sección de testimonios de pacientes con imágenes y reseñas -->
+    <section class="container my-5 py-5">
+      <h2 class="mb-5 fw-bold text-center" style="color: #1a237e;">
+        Mira lo que nuestros pacientes dicen sobre nosotros
+      </h2>
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-6 col-lg-4">
+          <div class="card testimonial-card shadow-sm">
+            <div class="position-relative">
+              <img src="{% static 'inicio/Sonrisa1.jpeg' %}" alt="Testimonio paciente 1">
+              <span class="testimonial-play-btn">▶</span>
+            </div>
+            <div class="testimonial-card-body text-center">
+              <h3 class="h5 fw-bold">Odonto Salud</h3>
+              <p class="text-muted mb-2">"Es mi sitio preferido, la atención y la confianza son increíbles."</p>
+              <p class="text-secondary small">Paciente satisfecho con su tratamiento estético.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card testimonial-card shadow-sm">
+            <div class="position-relative">
+              <img src="{% static 'inicio/Sonrisa2.webp' %}" alt="Testimonio paciente 2">
+              <span class="testimonial-play-btn">▶</span>
+            </div>
+            <div class="testimonial-card-body text-center">
+              <h3 class="h5 fw-bold">Yo me hice</h3>
+              <p class="text-muted mb-2">"Me hicieron sentir muy cómoda y el resultado fue mejor de lo esperado."</p>
+              <p class="text-secondary small">Paciente feliz con su nueva sonrisa.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card testimonial-card shadow-sm">
+            <div class="position-relative">
+              <img src="{% static 'inicio/Sonrisa4.webp' %}" alt="Testimonio paciente 3">
+              <span class="testimonial-play-btn">▶</span>
+            </div>
+            <div class="testimonial-card-body text-center">
+              <h3 class="h5 fw-bold">Mi sonrisa</h3>
+              <p class="text-muted mb-2">"Profesionales muy buenos y un equipo súper amable."</p>
+              <p class="text-secondary small">Opinión real de nuestros pacientes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de preguntas frecuentes con acordeón interactivo -->
+    <section class="container my-5 py-5">
+      <div class="faq-section">
+        <h2 class="mb-4 fw-bold">Preguntas frecuentes</h2>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            ¿Cuándo es necesario hacer un tratamiento de conducto?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Es necesario cuando el nervio del diente está inflamado o infectado, generalmente por caries profundas, golpes o sensibilidad prolongada.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            ¿El tratamiento de conducto duele?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Con la anestesia adecuada, el procedimiento es cómodo y el dolor real suele ser menor que el malestar previo al tratamiento.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            ¿Cuánto tiempo toma una endodoncia?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Normalmente entre 45 y 90 minutos, dependiendo de la complejidad del caso y de si se necesita una sesión adicional.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            ¿Es posible conservar un diente tratado por muchos años?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Sí, con un buen cuidado y revisiones periódicas, el diente puede durar muchos años conservado con una endodoncia y restauración adecuada.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            ¿Después de una endodoncia necesito una corona?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>En muchos casos sí, ya que una corona protege el diente tratado y evita fracturas, especialmente en molares y premolares.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+{% endblock %}
+
+
+    <!-- Sección hero con título principal y galería de imágenes -->
+    <header class="seccion-principal">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-7 text-start">
+            <h1 class="display-4 fw-bold text-primary">El sueño de tu sonrisa se puede volver realidad</h1>
+            <p class="lead text-muted mt-4">Tecnología de última generación y atención humanizada.</p>
+            <a href="/agenda/" class="btn btn-primary btn-lg mt-3 mb-4 shadow">Agendar cita ahora</a>
+          </div>
+
+          <div class="col-md-5">
+            <div class="row g-3">
+              <div class="col-6"><img src="{% static 'inicio/Sonrisa1.jpeg' %}" class="img-fluid rounded shadow ani-float-1 seccion-img-grid" /></div>
+              <div class="col-6"><img src="{% static 'inicio/Sonrisa2.webp' %}" class="img-fluid rounded shadow ani-float-2 seccion-img-grid" /></div>
+              <div class="col-6"><img src="{% static 'inicio/Sonrisa3.webp' %}" class="img-fluid rounded shadow ani-float-2 seccion-img-grid" /></div>
+              <div class="col-6"><img src="{% static 'inicio/Sonrisa4.webp' %}" class="img-fluid rounded shadow ani-float-1 seccion-img-grid" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sección de servicios / tratamientos con tarjetas -->
+    <section class="container my-5 text-center">
+      <h2 class="mb-5 fw-bold" style="color: #1a237e">Nuestros tratamientos</h2>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card card-service shadow-sm p-4 h-100">
+            <div class="mb-3" style="font-size: 2.2rem;">
+            😁
+            </div>
+            <h3 class="text-primary">Estética</h3>
+            <p class="text-dark fw-semibold">Desde <span class="fs-3">30,10€</span>/mes</p>
+            <p class="text-muted">Mejoramos apariencia, forma y color de tu sonrisa con blanqueamiento y carillas.</p>
+            <a class="btn btn-primary btn-sm mt-auto" href="#">Iniciar tratamiento</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card card-service shadow-sm p-4 h-100">
+            <div class="mb-3" style="font-size: 2.2rem;">
+            🦷
+            </div>
+            <h3 class="text-warning">Implantología</h3>
+            <p class="text-dark fw-semibold">Desde <span class="fs-3">37,35€</span>/mes</p>
+            <p class="text-muted">Reemplazamos dientes perdidos con implantes de calidad y recuperación segura.</p>
+            <a class="btn btn-primary btn-sm mt-auto" href="#">Iniciar tratamiento</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card card-service shadow-sm p-4 h-100">
+            <div class="mb-3" style="font-size: 2.2rem;">
+              🪥
+            </div>
+            <h3 class="text-info">Periodoncia</h3>
+            <p class="text-dark fw-semibold">Consulta personalizada</p>
+            <p class="text-muted">Diagnóstico y tratamiento de encías para prevenir gingivitis y periodontitis.</p>
+            <a class="btn btn-primary btn-sm mt-auto" href="#">Iniciar tratamiento</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card card-service shadow-sm p-4 h-100">
+            <div class="mb-3" style="font-size: 2.2rem;">
+              🧩
+            </div>
+            <h3 class="text-success">Prótesis dentales</h3>
+            <p class="text-dark fw-semibold">Consulta personalizada</p>
+            <p class="text-muted">Opciones con coronas de zirconio para restablecer función y estética dental.</p>
+            <a class="btn btn-primary btn-sm mt-auto" href="#">Iniciar tratamiento</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Sección de testimonios de pacientes con imágenes y reseñas -->
+    <section class="container my-5 py-5">
+      <h2 class="mb-5 fw-bold text-center" style="color: #1a237e;">
+        Mira lo que nuestros pacientes dicen sobre nosotros
+      </h2>
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-6 col-lg-4">
+          <div class="card testimonial-card shadow-sm">
+            <div class="position-relative">
+              <img src="{% static 'inicio/Sonrisa1.jpeg' %}" alt="Testimonio paciente 1">
+              <span class="testimonial-play-btn">▶</span>
+            </div>
+            <div class="testimonial-card-body text-center">
+              <h3 class="h5 fw-bold">Odonto Salud</h3>
+              <p class="text-muted mb-2">"Es mi sitio preferido, la atención y la confianza son increíbles."</p>
+              <p class="text-secondary small">Paciente satisfecho con su tratamiento estético.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card testimonial-card shadow-sm">
+            <div class="position-relative">
+              <img src="{% static 'inicio/Sonrisa2.webp' %}" alt="Testimonio paciente 2">
+              <span class="testimonial-play-btn">▶</span>
+            </div>
+            <div class="testimonial-card-body text-center">
+              <h3 class="h5 fw-bold">Yo me hice</h3>
+              <p class="text-muted mb-2">"Me hicieron sentir muy cómoda y el resultado fue mejor de lo esperado."</p>
+              <p class="text-secondary small">Paciente feliz con su nueva sonrisa.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card testimonial-card shadow-sm">
+            <div class="position-relative">
+              <img src="{% static 'inicio/Sonrisa4.webp' %}" alt="Testimonio paciente 3">
+              <span class="testimonial-play-btn">▶</span>
+            </div>
+            <div class="testimonial-card-body text-center">
+              <h3 class="h5 fw-bold">Mi sonrisa</h3>
+              <p class="text-muted mb-2">"Profesionales muy buenos y un equipo súper amable."</p>
+              <p class="text-secondary small">Opinión real de nuestros pacientes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de preguntas frecuentes con acordeón interactivo -->
+    <section class="container my-5 py-5">
+      <div class="faq-section">
+        <h2 class="mb-4 fw-bold">Preguntas frecuentes</h2>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            ¿Cuándo es necesario hacer un tratamiento de conducto?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Es necesario cuando el nervio del diente está inflamado o infectado, generalmente por caries profundas, golpes o sensibilidad prolongada.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            ¿El tratamiento de conducto duele?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Con la anestesia adecuada, el procedimiento es cómodo y el dolor real suele ser menor que el malestar previo al tratamiento.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            ¿Cuánto tiempo toma una endodoncia?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Normalmente entre 45 y 90 minutos, dependiendo de la complejidad del caso y de si se necesita una sesión adicional.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            ¿Es posible conservar un diente tratado por muchos años?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Sí, con un buen cuidado y revisiones periódicas, el diente puede durar muchos años conservado con una endodoncia y restauración adecuada.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            ¿Después de una endodoncia necesito una corona?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>En muchos casos sí, ya que una corona protege el diente tratado y evita fracturas, especialmente en molares y premolares.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scripts JavaScript para funcionalidades interactivas -->
+    <script src="{% static 'inicio/js/scripts.js' %}"></script>
+
+</body>
+</html>

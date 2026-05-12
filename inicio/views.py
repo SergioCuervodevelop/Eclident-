@@ -1,0 +1,181 @@
+from datetime import datetime
+from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from .models import Post, UsuarioGoogle
+# Importamos todo tu "Cerebro"
+from .logica_agendamiento import obtener_espacios_dia, filtrar_espacios_ocupados, buscar_tratamiento, agendar_cita_real, consultar_agenda_dia, obtener_citas_paciente, cancelar_cita
+
+def hola_mundo(request):
+    """Muestra la página principal (index.html)"""
+    return render(request, 'inicio/index.html')
+
+
+def google_login_custom(request):
+    """Página de login de Google personalizada con nuestros estilos"""
+    return render(request, 'inicio/google_login.html')
+
+
+def login_view(request):
+    """Maneja la página de login y autentica usuarios."""
+    mensaje = None
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('login')
+        mensaje = "Email o contraseña incorrectos"
+
+    return render(request, 'inicio/Login.html', {'mensaje': mensaje})
+
+def vista_agenda(request):
+    """Maneja la página de agendamiento con Inteligencia"""
+    mensaje = None
+    exito = False
+
+    
+    todos_los_tratamientos = buscar_tratamiento("")
+
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        cedula = request.POST.get('cedula')
+        direccion = request.POST.get('direccion')
+        celular = request.POST.get('celular')
+        correo = request.POST.get('correo')
+        fecha = request.POST.get('fecha')
+        hora = request.POST.get('hora')
+        
+        id_servicio = request.POST.get('tratamiento_id')
+
+       
+        try:
+            fecha_obj = datetime.strptime(fecha, "%Y-%m-%d").date()
+            hoy = datetime.now().date()
+            if fecha_obj < hoy:
+                return render(request, 'inicio/agenda.html', {
+                    'mensaje': "❌ Error: No puedes agendar citas en fechas pasadas.", 
+                    'exito': False,
+                    'tratamientos': todos_los_tratamientos
+                })
+        except ValueError:
+            pass
+
+      
+        espacios_teoricos = obtener_espacios_dia(fecha)
+        if not espacios_teoricos or "Error" in espacios_teoricos[0]:
+            return render(request, 'inicio/agenda.html', {
+                'mensaje': "❌ Día no disponible o clínica cerrada. Intenta otra fecha.", 
+                'exito': False,
+                'tratamientos': todos_los_tratamientos
+            })
+            
+        espacios_reales = filtrar_espacios_ocupados(fecha, 1, espacios_teoricos)
+        
+        if not espacios_reales:
+            return render(request, 'inicio/agenda.html', {
+                'mensaje': f"⚠️ Lo sentimos, la agenda del {fecha} está totalmente llena.", 
+                'exito': False,
+                'tratamientos': todos_los_tratamientos
+            })
+
+        if hora not in espacios_reales:
+            horas_libres = " | ".join(espacios_reales)
+            mensaje_ayuda = f"❌ La hora {hora} está ocupada. Horas libres para el {fecha}: {horas_libres}"
+            return render(request, 'inicio/agenda.html', {
+                'mensaje': mensaje_ayuda, 
+                'exito': False,
+                'tratamientos': todos_los_tratamientos
+            })
+
+        # --- 🩺 3. GUARDAR DIRECTAMENTE (Ya no adivinamos el tratamiento) ---
+        exito_agenda, msj_agenda = agendar_cita_real(
+            nombre, cedula, direccion, celular, correo, id_servicio, fecha, hora, 1
+        )
+        mensaje = msj_agenda
+        exito = exito_agenda
+
+    # Le pasamos la lista completa de tratamientos al HTML
+    return render(request, 'inicio/agenda.html', {
+        'mensaje': mensaje, 
+        'exito': exito,
+        'tratamientos': todos_los_tratamientos 
+    })
+
+def panel_recepcion(request):
+    """Panel de control privado para la recepcionista"""
+    agenda = None
+    citas_paciente = None
+    mensaje = None
+
+    if request.method == 'POST':
+        # Revisamos qué botón presionó la recepcionista
+        accion = request.POST.get('accion')
+
+        if accion == 'ver_agenda':
+            fecha = request.POST.get('fecha_agenda')
+            agenda = consultar_agenda_dia(fecha, 1)
+            if not agenda:
+                mensaje = f"✅ La agenda está libre. No hay citas para el {fecha}."
+
+        elif accion == 'buscar_paciente':
+            cedula = request.POST.get('cedula_buscar')
+            citas_paciente = obtener_citas_paciente(cedula)
+            if not citas_paciente:
+                mensaje = f"⚠️ El paciente con cédula {cedula} no tiene citas programadas."
+
+        elif accion == 'cancelar_cita':
+            id_cita = request.POST.get('id_cita_cancelar')
+            if cancelar_cita(id_cita):
+                mensaje = f"🗑️ ¡Cita #{id_cita} cancelada exitosamente! Espacio liberado."
+            else:
+                mensaje = f"❌ Error al intentar cancelar la cita #{id_cita}."
+
+    return render(request, 'inicio/recepcion.html', {
+        'agenda': agenda,
+        'citas_paciente': citas_paciente,
+        'mensaje': mensaje
+    })
+    
+def blog(request):
+    posts = Post.objects.all().order_by('-fecha')
+    return render(request, 'inicio/blog.html', {'posts': posts})
+
+def detalle_post(request, id):
+    post = get_object_or_404(Post, id=id)
+    return render(request, 'inicio/detalle_post.html', {'post': post})
+
+def contacto(request):
+    return render(request, 'inicio/contacto.html')
+
+def politicas(request):
+    return render(request, 'inicio/politicas.html')
+
+def terminos(request):
+    return render(request, 'inicio/terminos.html')
+
+
+@login_required(login_url='login')
+def usuario_perfil(request):
+    """Muestra el perfil del usuario autenticado"""
+    usuario = request.user
+    
+    # Obtener o crear el perfil de Google
+    google_profile = None
+    try:
+        google_profile = usuario.google_profile
+    except UsuarioGoogle.DoesNotExist:
+        pass
+    
+    # Obtener las citas del usuario
+    citas = consultar_agenda_dia(None, 1) if hasattr(usuario, 'cedula') else []
+    
+    contexto = {
+        'usuario': usuario,
+        'google_profile': google_profile,
+        'citas': citas,
+    }
+    
+    return render(request, 'inicio/Usuario.html', contexto)

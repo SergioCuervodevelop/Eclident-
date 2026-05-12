@@ -1,0 +1,116 @@
+{% extends "inicio/base.html" %}
+{% load static %}
+
+{% block title %}Panel de Recepción - Eclident{% endblock %}
+
+{% block extra_head %}
+<style>
+    body { background-color: #f4f6f9; }
+    .navbar-brand img { height: 40px; }
+    .card { border: none; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px;}
+    .card-header { background-color: #2c3e50; color: white; border-radius: 12px 12px 0 0 !important; font-weight: bold;}
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        {% if mensaje %}
+        <div class="alert alert-info text-center fw-bold">{{ mensaje }}</div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-4">
+                
+                <div class="card">
+                    <div class="card-header">📅 Consultar Agenda</div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="accion" value="ver_agenda">
+                            <input type="date" class="form-control mb-2" name="fecha_agenda" required>
+                            <button type="submit" class="btn btn-primary w-100">Buscar Citas</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">🔍 Buscar Paciente</div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="accion" value="buscar_paciente">
+                            <input type="number" class="form-control mb-2" name="cedula_buscar" placeholder="Cédula del paciente" required>
+                            <button type="submit" class="btn btn-success w-100">Ver Historial</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card border-danger">
+                    <div class="card-header bg-danger text-white">🗑️ Cancelar Cita</div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="accion" value="cancelar_cita">
+                            <input type="number" class="form-control mb-2" name="id_cita_cancelar" placeholder="ID de la Cita a cancelar" required>
+                            <button type="submit" class="btn btn-outline-danger w-100">Confirmar Cancelación</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-8">
+                
+                {% if agenda %}
+                <div class="card">
+                    <div class="card-header bg-primary">Resultados de la Agenda</div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr><th>Hora</th><th>Paciente</th><th>Celular</th><th>Tratamiento</th></tr>
+                            </thead>
+                            <tbody>
+                                {% for cita in agenda %}
+                                <tr>
+                                    <td><strong>{{ cita.0 }}</strong></td>
+                                    <td>{{ cita.1 }}</td>
+                                    <td>{{ cita.2 }}</td>
+                                    <td>{{ cita.3 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if citas_paciente %}
+                <div class="card">
+                    <div class="card-header bg-success">Citas del Paciente</div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr><th>ID Cita</th><th>Fecha</th><th>Hora</th><th>Tratamiento</th></tr>
+                            </thead>
+                            <tbody>
+                                {% for cita in citas_paciente %}
+                                <tr>
+                                    <td><span class="badge bg-secondary">{{ cita.0 }}</span></td>
+                                    <td>{{ cita.1 }}</td>
+                                    <td>{{ cita.2 }}</td>
+                                    <td>{{ cita.3 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <small class="text-muted">Si el paciente desea cancelar, usa el 'ID Cita' en el panel rojo de la izquierda.</small>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
