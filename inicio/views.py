@@ -1,8 +1,10 @@
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
 from .models import Post, UsuarioGoogle
 # Importamos todo tu "Cerebro"
 from .logica_agendamiento import obtener_espacios_dia, filtrar_espacios_ocupados, buscar_tratamiento, agendar_cita_real, consultar_agenda_dia, obtener_citas_paciente, cancelar_cita
@@ -20,16 +22,105 @@ def google_login_custom(request):
 def login_view(request):
     """Maneja la página de login y autentica usuarios."""
     mensaje = None
+    tipo_mensaje = None
+    
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(request, username=email, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('login')
-        mensaje = "Email o contraseña incorrectos"
+        
+        # Validar que los campos no estén vacíos
+        if not email or not password:
+            mensaje = "❌ Por favor completa todos los campos"
+            tipo_mensaje = 'error'
+        else:
+            # Intentar autenticar
+            try:
+                user = authenticate(request, username=email, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('usuario_perfil')
+                else:
+                    mensaje = "❌ Email o contraseña incorrectos"
+                    tipo_mensaje = 'error'
+            except Exception as e:
+                mensaje = f"❌ Error al iniciar sesión: {str(e)}"
+                tipo_mensaje = 'error'
 
-    return render(request, 'inicio/Login.html', {'mensaje': mensaje})
+    return render(request, 'inicio/Login.html', {'mensaje': mensaje, 'tipo_mensaje': tipo_mensaje})
+
+
+def recuperar_contrasena(request):
+    """Maneja la recuperación y cambio de contraseña"""
+    mensaje = None
+    tipo_mensaje = None
+    
+    if request.method == 'POST':
+        accion = request.POST.get('accion')
+        
+        if accion == 'buscar':
+            email = request.POST.get('email')
+            
+            try:
+                user = User.objects.get(email=email)
+                # Guardar el email en sesión para el siguiente paso
+                request.session['recover_email'] = email
+                request.session['recover_user_id'] = user.id
+                mensaje = f"✅ Cuenta encontrada. Establece tu nueva contraseña"
+                tipo_mensaje = 'success'
+            except User.DoesNotExist:
+                mensaje = "❌ No hay una cuenta registrada con ese email"
+                tipo_mensaje = 'error'
+        
+        elif accion == 'cambiar':
+            email = request.session.get('recover_email')
+            contraseña_nueva = request.POST.get('contraseña_nueva')
+            contraseña_confirmacion = request.POST.get('contraseña_confirmacion')
+            
+            # Validaciones
+            if not email:
+                mensaje = "❌ Debes buscar tu cuenta primero"
+                tipo_mensaje = 'error'
+            elif not contraseña_nueva or not contraseña_confirmacion:
+                mensaje = "❌ Por favor completa todos los campos"
+                tipo_mensaje = 'error'
+            elif contraseña_nueva != contraseña_confirmacion:
+                mensaje = "❌ Las contraseñas no coinciden"
+                tipo_mensaje = 'error'
+            elif len(contraseña_nueva) < 8:
+                mensaje = "❌ La contraseña debe tener al menos 8 caracteres"
+                tipo_mensaje = 'error'
+            else:
+                try:
+                    user = User.objects.get(email=email)
+                    user.set_password(contraseña_nueva)
+                    user.save()
+                    # Limpiar sesión
+                    if 'recover_email' in request.session:
+                        del request.session['recover_email']
+                    if 'recover_user_id' in request.session:
+                        del request.session['recover_user_id']
+                    mensaje = "✅ Contraseña actualizada exitosamente. Ya puedes iniciar sesión"
+                    tipo_mensaje = 'success'
+                    # Mostrar formulario de login después de 2 segundos
+                    return render(request, 'inicio/recuperar_contrasena.html', {
+                        'mensaje': mensaje,
+                        'tipo_mensaje': tipo_mensaje,
+                        'mostrar_login': True
+                    })
+                except Exception as e:
+                    mensaje = f"❌ Error al cambiar contraseña: {str(e)}"
+                    tipo_mensaje = 'error'
+    
+    # Verificar si el email ya fue buscado
+    email_encontrado = request.session.get('recover_email')
+    
+    contexto = {
+        'mensaje': mensaje,
+        'tipo_mensaje': tipo_mensaje,
+        'email_encontrado': email_encontrado,
+    }
+    
+    return render(request, 'inicio/recuperar_contrasena.html', contexto)
 
 def vista_agenda(request):
     """Maneja la página de agendamiento con Inteligencia"""
@@ -155,6 +246,12 @@ def politicas(request):
 
 def terminos(request):
     return render(request, 'inicio/terminos.html')
+
+
+def logout_view(request):
+    """Cierra sesión del usuario y redirige a inicio"""
+    logout(request)
+    return redirect('inicio')
 
 
 @login_required(login_url='login')

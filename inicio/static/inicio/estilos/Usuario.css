@@ -1,0 +1,102 @@
+   body {
+            background: white;
+            min-height: 100vh;
+            padding-top: 1rem;
+            padding-bottom: 2rem;
+        }
+        .perfil-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .perfil-header {
+            background: linear-gradient(to bottom, #0311d1 0%, #69b4df 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        .perfil-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            display: block;
+        }
+        .perfil-nombre {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .perfil-email {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        .perfil-seccion {
+            margin-bottom: 2rem;
+        }
+        .perfil-seccion h3 {
+            color: #0311d1;
+            font-weight: bold;
+            border-bottom: 2px solid #0311d1;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .perfil-item {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .perfil-label {
+            font-weight: bold;
+            color: #333;
+        }
+        .perfil-valor {
+            color: #0311d1;
+        }
+        .btn-personalizado {
+            background: linear-gradient(to bottom, #0311d1 0%, #69b4df 100%);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-personalizado:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 15px rgba(3, 17, 209, 0.3);
+            color: white;
+        }
+        .citas-list {
+            list-style: none;
+            padding: 0;
+        }
+        .cita-item {
+            background: #7a7d82;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid #0311d1;
+        }
+        .navbar-custom {
+            background: white;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .logo-img {
+            height: 50px;
+        }

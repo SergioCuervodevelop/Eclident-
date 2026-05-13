@@ -9,6 +9,7 @@
     <title>{% block title %}Eclident - Clínica Dental{% endblock %}</title>
     <!-- Enlaces a Bootstrap CSS y estilos personalizados -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="{% static 'inicio/estilos/styles.css' %}" rel="stylesheet" />
     <link href="{% static 'inicio/estilos/Boton-log.css' %}" rel="stylesheet" />
     <link href="{% static 'inicio/estilos/Horario.css' %}" rel="stylesheet" />
@@ -37,7 +38,15 @@
                     <a class="nav-link-custom" href="/Nosotros/">Sobre Nosotros</a>
                 </div>
                 <div class="nav-item-custom">
-                 <a href="{% url 'login' %}" class="boton-login" style="text-decoration: none !important;">Iniciar sesión</a>
+                    {% if user.is_authenticated %}
+                        <!-- Usuario autenticado: mostrar icono de perfil -->
+                        <a href="{% url 'usuario_perfil' %}" class="boton-login" style="text-decoration: none !important; display: inline-flex; align-items: center; justify-content: center; transition: all 0.3s ease;" aria-label="Ir a perfil">
+                            <i class="fa fa-user-circle" style="color: rgb(116, 192, 252); font-size: 2rem;"></i>
+                        </a>
+                    {% else %}
+                        <!-- Usuario no autenticado: mostrar botón de login -->
+                        <a href="{% url 'login' %}" class="boton-login" style="text-decoration: none !important;">Iniciar sesión</a>
+                    {% endif %}
                 </div>  
             </div>
         </div>  
@@ -50,11 +59,21 @@
         <div class="nav-item-custom bg-azul"><a class="nav-link-custom" href="/">Inicio</a></div>
         <div class="nav-item-custom bg-rosado"><a class="nav-link-custom" href="/Direccion/">Dirección</a></div>
         <div class="nav-item-custom bg-naranja"><a class="nav-link-custom" href="/Nosotros/">Sobre Nosotros</a></div>
-        <div class="nav-item-custom"><a href="{% url 'login' %}" class="login-icon-btn shadow-sm" aria-label="Ir a login" style="color: #008ed6; width: 52px; height: 52px; display: inline-flex; align-items: center; justify-content: center;">
-                <svg class="login-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="42" height="42" fill="#008ed6" style="display: block; width: 42px; height: 42px; color: #008ed6;" aria-hidden="true" focusable="false">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#008ed6"/>
-                </svg>
-            </a></div>
+        <div class="nav-item-custom">
+            {% if user.is_authenticated %}
+                <!-- Usuario autenticado: mostrar icono de perfil -->
+                <a href="{% url 'usuario_perfil' %}" class="login-icon-btn shadow-sm" aria-label="Ir a perfil" style="display: inline-flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                    <i class="fa fa-user-circle" style="color: rgb(116, 192, 252); font-size: 2.5rem;"></i>
+                </a>
+            {% else %}
+                <!-- Usuario no autenticado: mostrar icono de login -->
+                <a href="{% url 'login' %}" class="login-icon-btn shadow-sm" aria-label="Ir a login" style="color: #008ed6; width: 52px; height: 52px; display: inline-flex; align-items: center; justify-content: center;">
+                    <svg class="login-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="42" height="42" fill="#008ed6" style="display: block; width: 42px; height: 42px; color: #008ed6;" aria-hidden="true" focusable="false">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#008ed6"/>
+                    </svg>
+                </a>
+            {% endif %}
+        </div>
     </div>
 
     <!-- Contenido principal de la página -->

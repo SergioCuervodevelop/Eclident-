@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from allauth.socialaccount.signals import social_account_updated, pre_social_login
+from allauth.socialaccount.signals import social_account_updated
 from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.models import User
 from .models import UsuarioGoogle
@@ -38,16 +38,9 @@ def actualizar_perfil_google(request, socialaccount, **kwargs):
         print(f"Error actualizando perfil de Google: {e}")
 
 
-@receiver(pre_social_login)
-def conectar_usuario_existente(request, socialaccount, **kwargs):
-    """Conectar usuario existente con Google"""
-    try:
-        # Si el email ya existe, conectar la cuenta
-        if socialaccount.user.email:
-            try:
-                user = User.objects.get(email=socialaccount.user.email)
-                socialaccount.user = user
-            except User.DoesNotExist:
-                pass
-    except Exception as e:
-        print(f"Error conectando usuario: {e}")
+# Signal anterior removido - la lógica ahora está en adapters.py
+# El adaptador GoogleSocialAccountAdapter maneja:
+# - Conectar usuarios existentes por email
+# - Crear el perfil de UsuarioGoogle
+# - Poblar datos del usuario desde Google
+

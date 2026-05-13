@@ -149,6 +149,8 @@ ACCOUNT_EMAIL_REQUIRED = True  # Email requerido
 SOCIALACCOUNT_AUTO_SIGNUP = True  # Auto crear usuario con Google
 
 # Configuración de allauth para Google
+SOCIALACCOUNT_ADAPTER = 'inicio.adapters.GoogleSocialAccountAdapter'
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
