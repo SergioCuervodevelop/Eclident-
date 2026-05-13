@@ -1,140 +1,106 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Términos y Condiciones - Eclident</title>
+{% extends "inicio/base.html" %}
+{% load static %}
 
-    <style>
+{% block title %}Términos y Condiciones - Eclident{% endblock %}
 
-        body{
-            margin:0;
-            font-family:'Segoe UI', sans-serif;
-            background:#f4f6f9;
-        }
+{% block extra_head %}
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<style>
+    .terms-section {
+        transition: background-color 0.3s ease;
+        border-radius: 15px;
+        padding: 20px;
+    }
+    .terms-section:hover {
+        background-color: #fcfcfc;
+        border-left: 4px solid #008ed6;
+    }
+</style>
+{% endblock %}
 
-        .header{
-            background:#0d6efd;
-            color:white;
-            text-align:center;
-            padding:40px 20px;
-        }
-
-        .container{
-            width:90%;
-            max-width:1000px;
-            margin:40px auto;
-        }
-
-        .card{
-            background:white;
-            padding:35px;
-            border-radius:15px;
-            box-shadow:0 5px 15px rgba(0,0,0,0.1);
-            line-height:1.8;
-            color:#444;
-        }
-
-        h1{
-            margin:0;
-        }
-
-        h2{
-            color:#0d6efd;
-            margin-top:30px;
-        }
-
-        .btn{
-            display:inline-block;
-            margin-top:30px;
-            padding:10px 18px;
-            background:#0d6efd;
-            color:white;
-            text-decoration:none;
-            border-radius:8px;
-        }
-
-        .btn:hover{
-            background:#084298;
-        }
-
-    </style>
-</head>
-
-<body>
-
-<div class="header">
-    <h1>📜 Términos y Condiciones</h1>
-    <p>Condiciones de uso de la plataforma Eclident</p>
-</div>
-
-<div class="container">
-
-    <div class="card">
-
-        <h2>1. Uso de la plataforma</h2>
-
-        <p>
-            El sitio web de ECLIDENT S.A.S. ha sido desarrollado para facilitar
-            el acceso a información odontológica, agendamiento de citas y
-            comunicación con nuestros pacientes.
-        </p>
-
-        <h2>2. Responsabilidad del usuario</h2>
-
-        <p>
-            El usuario se compromete a proporcionar información veraz y
-            actualizada al momento de solicitar una cita o utilizar los
-            servicios disponibles en la plataforma.
-        </p>
-
-        <h2>3. Agendamiento de citas</h2>
-
-        <p>
-            Las citas estarán sujetas a disponibilidad de horarios y
-            confirmación por parte de la clínica.
-        </p>
-
-        <ul>
-            <li>Las llegadas tardías pueden afectar la atención.</li>
-            <li>La cancelación de citas debe realizarse con anticipación.</li>
-            <li>La clínica podrá reorganizar horarios por motivos operativos.</li>
-        </ul>
-
-        <h2>4. Propiedad intelectual</h2>
-
-        <p>
-            Todo el contenido presente en esta plataforma, incluyendo diseño,
-            imágenes, textos y logotipos, pertenece a ECLIDENT S.A.S. y no
-            podrá ser reproducido sin autorización previa.
-        </p>
-
-        <h2>5. Limitación de responsabilidad</h2>
-
-        <p>
-            ECLIDENT S.A.S. no se hace responsable por interrupciones temporales
-            del sistema, fallos externos de internet o problemas técnicos ajenos
-            al control de la clínica.
-        </p>
-
-        <h2>6. Modificaciones</h2>
-
-        <p>
-            La clínica podrá actualizar estos términos y condiciones en
-            cualquier momento para mejorar el funcionamiento de la plataforma
-            y la atención a los usuarios.
-        </p>
-
-        <h2>7. Aceptación</h2>
-
-        <p>
-            El uso de este sitio web implica la aceptación de los presentes
-            términos y condiciones.
-        </p>
-
-        <a href="/" class="btn">← Volver al inicio</a>
-
+{% block content %}
+<div class="container-fluid px-0 mb-5">
+    <div class="p-5 text-center text-white shadow-sm" style="background: linear-gradient(135deg, #0d2f6a 0%, #071c3f 100%); border-radius: 0 0 30px 30px;">
+        <h1 class="display-4 fw-bolder mb-2">📜 Términos y Condiciones</h1>
+        <p class="fs-4 mb-0">Condiciones de uso de la plataforma Eclident</p>
     </div>
-
 </div>
 
-</body>
-</html>
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+                
+                <div class="terms-section border-bottom mb-4 pb-4">
+                    <h4 class="fw-bold d-flex align-items-center" style="color: #1a237e;">
+                        <i class="fa fa-laptop text-primary me-3 fs-3"></i> 1. Uso de la plataforma
+                    </h4>
+                    <p class="text-muted ms-5 mb-0" style="line-height: 1.8;">
+                        El sitio web de <strong>ECLIDENT S.A.S.</strong> ha sido desarrollado para facilitar el acceso a información odontológica, agendamiento de citas y comunicación con nuestros pacientes.
+                    </p>
+                </div>
+
+                <div class="terms-section border-bottom mb-4 pb-4">
+                    <h4 class="fw-bold d-flex align-items-center" style="color: #1a237e;">
+                        <i class="fa fa-id-card-o text-primary me-3 fs-3"></i> 2. Responsabilidad del usuario
+                    </h4>
+                    <p class="text-muted ms-5 mb-0" style="line-height: 1.8;">
+                        El usuario se compromete a proporcionar información veraz y actualizada al momento de solicitar una cita o utilizar los servicios disponibles en la plataforma.
+                    </p>
+                </div>
+
+                <div class="terms-section border-bottom mb-4 pb-4">
+                    <h4 class="fw-bold d-flex align-items-center" style="color: #1a237e;">
+                        <i class="fa fa-calendar-check-o text-primary me-3 fs-3"></i> 3. Agendamiento de citas
+                    </h4>
+                    <p class="text-muted ms-5 mb-3" style="line-height: 1.8;">
+                        Las citas estarán sujetas a disponibilidad de horarios y confirmación por parte de la clínica:
+                    </p>
+                    <ul class="text-muted ms-5 mb-0" style="line-height: 1.8;">
+                        <li><i class="fa fa-clock-o text-warning me-2"></i> Las llegadas tardías pueden afectar la atención.</li>
+                        <li><i class="fa fa-times-circle text-danger me-2"></i> La cancelación de citas debe realizarse con anticipación.</li>
+                        <li><i class="fa fa-refresh text-info me-2"></i> La clínica podrá reorganizar horarios por motivos operativos.</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section border-bottom mb-4 pb-4">
+                    <h4 class="fw-bold d-flex align-items-center" style="color: #1a237e;">
+                        <i class="fa fa-copyright text-primary me-3 fs-3"></i> 4. Propiedad intelectual
+                    </h4>
+                    <p class="text-muted ms-5 mb-0" style="line-height: 1.8;">
+                        Todo el contenido presente en esta plataforma, incluyendo diseño, imágenes, textos y logotipos, pertenece a <strong>ECLIDENT S.A.S.</strong> y no podrá ser reproducido sin autorización previa.
+                    </p>
+                </div>
+
+                <div class="terms-section border-bottom mb-4 pb-4">
+                    <h4 class="fw-bold d-flex align-items-center" style="color: #1a237e;">
+                        <i class="fa fa-exclamation-triangle text-primary me-3 fs-3"></i> 5. Limitación de responsabilidad
+                    </h4>
+                    <p class="text-muted ms-5 mb-0" style="line-height: 1.8;">
+                        ECLIDENT S.A.S. no se hace responsable por interrupciones temporales del sistema, fallos externos de internet o problemas técnicos ajenos al control de la clínica.
+                    </p>
+                </div>
+
+                <div class="terms-section mb-4">
+                    <h4 class="fw-bold d-flex align-items-center" style="color: #1a237e;">
+                        <i class="fa fa-pencil-square-o text-primary me-3 fs-3"></i> 6. Aceptación
+                    </h4>
+                    <p class="text-muted ms-5 mb-0" style="line-height: 1.8;">
+                        El uso de este sitio web implica la aceptación de los presentes términos y condiciones.
+                    </p>
+                </div>
+
+                <div class="text-center mt-5 pt-4 border-top">
+                    <a href="{% url 'inicio' %}" class="btn btn-outline-primary fw-bold rounded-pill px-4 py-2 me-2 shadow-sm">
+                        <i class="fa fa-home me-2"></i> Inicio
+                    </a>
+                    <a href="{% url 'politicas' %}" class="btn btn-primary fw-bold rounded-pill px-4 py-2 shadow-sm">
+                        <i class="fa fa-lock me-2"></i> Ver Privacidad
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

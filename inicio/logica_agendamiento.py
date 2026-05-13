@@ -152,13 +152,13 @@ def agendar_cita_real(nombre, cedula, direccion, celular, correo, id_servicio, f
         conexion.close()
 
 def consultar_agenda_dia(fecha, id_odontologo=1):
-    """Busca todas las citas de un día y cruza los datos con Pacientes y Servicios"""
+    """Busca todas las citas de un día incluyendo el ID y el ESTADO"""
     conexion = sqlite3.connect(DB_PATH)
     cursor = conexion.cursor()
     try:
-        # El comando JOIN une las 3 tablas para darnos un resumen perfecto
+        # Agregamos C.id_cita al principio para poder usarlo en el panel
         cursor.execute("""
-            SELECT C.hora_inicio, P.nombre, P.celular, S.nombre_servicio 
+            SELECT C.id_cita, C.hora_inicio, P.nombre, P.celular, S.nombre_servicio, C.estado 
             FROM Cita C
             JOIN Paciente P ON C.num_paciente = P.num_paciente
             JOIN Servicio S ON C.id_servicio = S.id_servicio
@@ -166,26 +166,26 @@ def consultar_agenda_dia(fecha, id_odontologo=1):
             ORDER BY C.hora_inicio ASC
         """, (fecha, id_odontologo))
         
-        agenda = cursor.fetchall()
-        return agenda
+        return cursor.fetchall()
     except Exception as e:
         print(f"❌ Error al consultar la agenda: {e}")
         return []
     finally:
         conexion.close()
-
+            
 def obtener_citas_paciente(cedula):
-    """Busca todas las citas activas de un paciente usando su cédula"""
+    """Busca historial de un paciente incluyendo su ESTADO y citas pasadas/canceladas"""
     conexion = sqlite3.connect(DB_PATH)
     cursor = conexion.cursor()
     try:
+        # Se añade C.estado y se quita el filtro de 'cancelada' para ver el historial real
         cursor.execute("""
-            SELECT C.id_cita, C.fecha, C.hora_inicio, S.nombre_servicio 
+            SELECT C.id_cita, C.fecha, C.hora_inicio, S.nombre_servicio, C.estado 
             FROM Cita C
             JOIN Paciente P ON C.num_paciente = P.num_paciente
             JOIN Servicio S ON C.id_servicio = S.id_servicio
-            WHERE P.cedula = ? AND C.estado != 'cancelada'
-            ORDER BY C.fecha ASC
+            WHERE P.cedula = ?
+            ORDER BY C.fecha DESC
         """, (cedula,))
         return cursor.fetchall()
     except Exception as e:
@@ -205,5 +205,36 @@ def cancelar_cita(id_cita):
     except Exception as e:
         print(f"❌ Error al cancelar la cita: {e}")
         return False
+    finally:
+        conexion.close()
+
+def completar_cita(id_cita):
+    """Cambia el estado de una cita a 'completada'"""
+    conexion = sqlite3.connect(DB_PATH)
+    cursor = conexion.cursor()
+    try:
+        cursor.execute("UPDATE Cita SET estado = 'completada' WHERE id_cita = ?", (id_cita,))
+        conexion.commit()
+        return True
+    except Exception as e:
+        print(f"❌ Error al completar la cita: {e}")
+        return False
+    finally:
+        conexion.close()
+
+def obtener_datos_paciente(cedula):
+    """Trae toda la información personal de un paciente por su cédula"""
+    conexion = sqlite3.connect(DB_PATH)
+    cursor = conexion.cursor()
+    try:
+        # Consultamos todos los campos de la tabla Paciente
+        cursor.execute("""
+            SELECT nombre, cedula, direccion, celular, correo, fecha_ingreso 
+            FROM Paciente WHERE cedula = ?
+        """, (cedula,))
+        return cursor.fetchone() # Retorna una sola fila con los datos
+    except Exception as e:
+        print(f"❌ Error al buscar datos del paciente: {e}")
+        return None
     finally:
         conexion.close()

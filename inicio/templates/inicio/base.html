@@ -31,7 +31,7 @@
                     <a class="nav-link-custom" href="/">Inicio</a>
                 </div>
                 <div class="nav-item-custom bg-rosado">
-                    <a class="nav-link-custom" href="/Direccion/">Dirección</a>
+                    <a class="nav-link-custom" href="/contacto/">Dirección</a>
                 </div>
                 <div class="nav-item-custom bg-naranja">
                     <a class="nav-link-custom" href="/Nosotros/">Sobre Nosotros</a>
@@ -63,6 +63,7 @@
     <!-- Footer profesional con información de contacto, horarios y redes sociales -->
     <footer class="footer-section">
       <div class="container">
+        
         <div class="row gy-4">
           <div class="col-lg-4">
             <h3 class="footer-title">Eclident</h3>
@@ -89,8 +90,7 @@
           </div>
         </div>
 
-        <!-- Área de redes sociales con botones cuadrados -->
-       <div class="footer-social-area mt-4 pt-4 border-top border-secondary">
+        <div class="footer-social-area mt-4 pt-4 border-top border-secondary">
           <div class="footer-social-label">Síguenos en nuestras redes</div>
           <div class="footer-social-buttons">
             <a href="https://www.instagram.com/eclident01?igsh=MTVnMzV2MXhtNm1jZw==" class="footer-social-btn" aria-label="Instagram">
@@ -123,19 +123,17 @@
             </a>
           </div>
         </div>
-      </div>
 
-
-        <!-- Parte inferior del footer con copyright y enlaces legales -->
-        <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mt-3 pt-3 border-top">
+        <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mt-3 pt-3 border-top border-secondary">
           <p class="footer-copy mb-0">© 2026 Eclident. Todos los derechos reservados.</p>
           <div class="footer-links">
-            <a href="/politicas/" class="footer-link">Política de privacidad</a>
-            <a href="/terminos/" class="footer-link">Términos y condiciones</a>
-            <a href="/contacto/" class="footer-link">Contáctanos</a>
+            <a href="{% url 'politicas' %}" class="footer-link">Política de privacidad</a>
+            <a href="{% url 'terminos' %}" class="footer-link">Términos y condiciones</a>
+            <a href="{% url 'contacto' %}" class="footer-link">Contáctanos</a>
           </div>
         </div>
-      </div>
+        
+      </div> 
     </footer>
 
     <!-- Scripts JavaScript para funcionalidades interactivas -->

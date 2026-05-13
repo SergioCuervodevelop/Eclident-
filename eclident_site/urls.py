@@ -25,6 +25,7 @@ urlpatterns = [
     path('contacto/', views.contacto, name='contacto'),
     path('politicas/', views.politicas, name='politicas'),
     path('terminos/', views.terminos, name='terminos'),
+    path('Nosotros/', views.nosotros, name='nosotros')
 ]
  
 if settings.DEBUG:

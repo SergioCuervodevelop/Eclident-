@@ -1,125 +1,80 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Contacto - Eclident</title>
+{% extends "inicio/base.html" %}
+{% load static %}
 
-    <style>
+{% block title %}Contacto - Eclident{% endblock %}
 
-        body{
-            margin:0;
-            font-family:'Segoe UI', sans-serif;
-            background:#f4f6f9;
-        }
+{% block extra_head %}
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+{% endblock %}
 
-        .header{
-            background:#0d6efd;
-            color:white;
-            text-align:center;
-            padding:40px 20px;
-        }
-
-        .container{
-            width:90%;
-            max-width:1000px;
-            margin:40px auto;
-        }
-
-        .card{
-            background:white;
-            padding:30px;
-            border-radius:15px;
-            box-shadow:0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        h1{
-            margin:0;
-        }
-
-        h2{
-            color:#0d6efd;
-        }
-
-        .info{
-            margin-bottom:20px;
-            line-height:1.8;
-            color:#444;
-        }
-
-        .btn{
-            display:inline-block;
-            margin-top:20px;
-            padding:10px 18px;
-            background:#0d6efd;
-            color:white;
-            text-decoration:none;
-            border-radius:8px;
-        }
-
-        .btn:hover{
-            background:#084298;
-        }
-
-        iframe{
-            width:100%;
-            height:350px;
-            border:none;
-            border-radius:15px;
-            margin-top:20px;
-        }
-
-    </style>
-</head>
-
-<body>
-
-<div class="header">
-    <h1>📞 Contáctanos</h1>
-    <p>Estamos listos para cuidar tu sonrisa</p>
+{% block content %}
+<div class="container-fluid px-0 mb-5">
+    <div class="p-5 text-center text-white shadow-sm" style="background: linear-gradient(135deg, #008ed6 0%, #071c3f 100%); border-radius: 0 0 30px 30px;">
+        <h1 class="display-4 fw-bolder mb-2">📞 Contáctanos</h1>
+        <p class="fs-4 mb-0">Estamos listos para cuidar tu sonrisa</p>
+    </div>
 </div>
 
-<div class="container">
+<div class="container mb-5">
+    <div class="row g-4 align-items-stretch">
+        
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 h-100 p-4 pb-5" style="background-color: var(--light-bg, #f8fbff);">
+                <h3 class="fw-bold mb-4" style="color: #2938d8;">Información de Contacto</h3>
+                
+                <div class="d-flex align-items-center mb-4">
+                    <div class="text-primary shadow-sm bg-white me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; border-radius: 50%; font-size: 1.4rem;">
+                        <i class="fa fa-map-marker"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-1" style="color: #333;">Ubicación</h5>
+                        <p class="text-muted mb-0">Calle 39 #7-107<br>Barrio Las Granjas<br>Neiva - Huila, Colombia</p>
+                    </div>
+                </div>
 
-    <div class="card">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="text-success shadow-sm bg-white me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; border-radius: 50%; font-size: 1.4rem;">
+                        <i class="fa fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-1" style="color: #333;">Línea de Atención</h5>
+                        <p class="text-muted mb-0">318 167 6632</p>
+                    </div>
+                </div>
 
-      <h2>Ubicación</h2>
-
-      <iframe
-            src="https://www.google.com/maps?q=Valledupar+Calle+18+13-10&output=embed">
-      </iframe>
-
-        <h2>Información de contacto</h2>
-
-        <div class="info">
-            <strong>📍 Dirección:</strong><br>
-            Calle 18 #13-10 Local 1<br>
-            Barrio Gaitán<br>
-            Valledupar, Cesar – Colombia
+                <div class="d-flex align-items-center mb-4">
+                    <div class="text-danger shadow-sm bg-white me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; border-radius: 50%; font-size: 1.3rem;">
+                        <i class="fa fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-1" style="color: #333;">Correo Electrónico</h5>
+                        <p class="text-muted mb-0">eclident.ips@eclident.com</p>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-auto pt-4 border-top">
+                    <p class="text-muted mb-3">¿Ya sabes qué tratamiento necesitas?</p>
+                    <a href="https://wa.me/message/ECJQMKTWSR5QG1" class="btn btn-primary fw-bold w-100 rounded-pill shadow-sm py-2" style="transition: transform 0.3s;">
+                       <i class="fa fa-calendar-check-o me-2"></i> Agendar Cita
+                    </a>            
+                </div>
+            </div>
         </div>
 
-        <div class="info">
-            <strong>📞 Teléfonos:</strong><br>
-            321 340 6428<br>
-            304 385 5950
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100" style="min-height: 450px;">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.621431267448!2d-75.2974013!3d2.9388373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3b746f3a51f081%3A0x8ec8c067d5cb1812!2sCl.%2039%20%237-107%2C%20Neiva%2C%20Huila%2C%20Colombia!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
         </div>
-
-        <div class="info">
-            <strong>📧 Correo electrónico:</strong><br>
-            linaguzman.od@outlook.es
-        </div>
-
-        <div class="info">
-            <strong>🦷 Servicios:</strong><br>
-            Odontología general, Ortodoncia,
-            Endodoncia, Estética dental,
-            Implantes, Blanqueamiento y más.
-        </div>
-
-        <a href="/" class="btn">← Volver al inicio</a>
-
         
     </div>
-
 </div>
-
-</body>
-</html>
+{% endblock %}
