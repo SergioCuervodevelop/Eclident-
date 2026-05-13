@@ -4,113 +4,206 @@
 {% block title %}Panel de Recepción - Eclident{% endblock %}
 
 {% block extra_head %}
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <style>
-    body { background-color: #f4f6f9; }
-    .navbar-brand img { height: 40px; }
-    .card { border: none; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px;}
-    .card-header { background-color: #2c3e50; color: white; border-radius: 12px 12px 0 0 !important; font-weight: bold;}
+    .admin-card { border: none; border-radius: 15px; transition: transform 0.3s ease; }
+    .table-container { background: white; border-radius: 15px; overflow: hidden; }
+    .btn-action { border-radius: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; }
+    .badge-id { background-color: #e3f2fd; color: #007bff; font-weight: bold; border: 1px solid #b3e5fc; }
+    .badge-status { min-width: 95px; text-transform: uppercase; font-size: 0.7rem; }
 </style>
 {% endblock %}
 
 {% block content %}
+<div class="container-fluid px-0 mb-4">
+    <div class="p-4 p-md-5 text-center text-white shadow-sm d-flex flex-column align-items-center justify-content-center" style="background: linear-gradient(135deg, #008ed6 0%, #071c3f 100%); border-radius: 0 0 30px 30px;">
+        <h1 class="fw-bold mb-3"><i class="fa fa-desktop me-3"></i>Panel Administrativo</h1>
+        <a href="{% url 'agenda' %}" class="btn btn-outline-light rounded-pill px-4 fw-bold shadow-sm">
+            <i class="fa fa-plus-circle me-2"></i>Agendar Nueva Cita
+        </a>
+    </div>
+</div>
 
-    <div class="container">
-        {% if mensaje %}
-        <div class="alert alert-info text-center fw-bold">{{ mensaje }}</div>
-        {% endif %}
+<div class="container mb-5">
+    {% if mensaje %}
+    <div class="alert alert-info alert-dismissible fade show rounded-4 shadow-sm border-0 d-flex align-items-center mb-4" role="alert">
+        <i class="fa fa-info-circle fs-4 me-3 text-primary"></i>
+        <div class="fw-bold">{{ mensaje }}</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
 
-        <div class="row">
-            <div class="col-md-4">
-                
-                <div class="card">
-                    <div class="card-header">📅 Consultar Agenda</div>
-                    <div class="card-body">
-                        <form method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="accion" value="ver_agenda">
-                            <input type="date" class="form-control mb-2" name="fecha_agenda" required>
-                            <button type="submit" class="btn btn-primary w-100">Buscar Citas</button>
-                        </form>
-                    </div>
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="card admin-card shadow-sm mb-4">
+                <div class="card-body p-4 text-center">
+                    <div class="text-primary mb-2"><i class="fa fa-calendar-check-o fa-2x"></i></div>
+                    <h6 class="fw-bold mb-3">Consultar Agenda</h6>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="accion" value="ver_agenda">
+                        <input type="date" class="form-control mb-2 rounded-pill text-center" name="fecha_agenda" required>
+                        <button type="submit" class="btn btn-primary w-100 btn-action rounded-pill">Buscar Citas</button>
+                    </form>
                 </div>
-
-                <div class="card">
-                    <div class="card-header">🔍 Buscar Paciente</div>
-                    <div class="card-body">
-                        <form method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="accion" value="buscar_paciente">
-                            <input type="number" class="form-control mb-2" name="cedula_buscar" placeholder="Cédula del paciente" required>
-                            <button type="submit" class="btn btn-success w-100">Ver Historial</button>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="card border-danger">
-                    <div class="card-header bg-danger text-white">🗑️ Cancelar Cita</div>
-                    <div class="card-body">
-                        <form method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="accion" value="cancelar_cita">
-                            <input type="number" class="form-control mb-2" name="id_cita_cancelar" placeholder="ID de la Cita a cancelar" required>
-                            <button type="submit" class="btn btn-outline-danger w-100">Confirmar Cancelación</button>
-                        </form>
-                    </div>
-                </div>
-
             </div>
 
-            <div class="col-md-8">
-                
-                {% if agenda %}
-                <div class="card">
-                    <div class="card-header bg-primary">Resultados de la Agenda</div>
-                    <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr><th>Hora</th><th>Paciente</th><th>Celular</th><th>Tratamiento</th></tr>
-                            </thead>
-                            <tbody>
-                                {% for cita in agenda %}
-                                <tr>
-                                    <td><strong>{{ cita.0 }}</strong></td>
-                                    <td>{{ cita.1 }}</td>
-                                    <td>{{ cita.2 }}</td>
-                                    <td>{{ cita.3 }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="card admin-card shadow-sm mb-4">
+                <div class="card-body p-4 text-center">
+                    <div class="text-success mb-2"><i class="fa fa-search fa-2x"></i></div>
+                    <h6 class="fw-bold mb-3">Buscar Paciente</h6>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="accion" value="buscar_paciente">
+                        <input type="number" class="form-control mb-2 rounded-pill text-center" name="cedula_buscar" placeholder="Cédula" required>
+                        <button type="submit" class="btn btn-success w-100 btn-action rounded-pill">Ver Detalles</button>
+                    </form>
                 </div>
-                {% endif %}
+            </div>
 
-                {% if citas_paciente %}
-                <div class="card">
-                    <div class="card-header bg-success">Citas del Paciente</div>
-                    <div class="card-body">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr><th>ID Cita</th><th>Fecha</th><th>Hora</th><th>Tratamiento</th></tr>
-                            </thead>
-                            <tbody>
-                                {% for cita in citas_paciente %}
-                                <tr>
-                                    <td><span class="badge bg-secondary">{{ cita.0 }}</span></td>
-                                    <td>{{ cita.1 }}</td>
-                                    <td>{{ cita.2 }}</td>
-                                    <td>{{ cita.3 }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        <small class="text-muted">Si el paciente desea cancelar, usa el 'ID Cita' en el panel rojo de la izquierda.</small>
-                    </div>
+            <div class="card admin-card shadow-sm border-success mb-4">
+                <div class="card-body p-4 text-center">
+                    <div class="text-success mb-2"><i class="fa fa-check-square-o fa-2x"></i></div>
+                    <h6 class="fw-bold mb-3 text-success">Completar Asistencia</h6>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="accion" value="completar_cita">
+                        <input type="number" class="form-control mb-2 rounded-pill text-center" name="id_cita_completar" placeholder="Ingrese el ID de Cita" required>
+                        <button type="submit" class="btn btn-success w-100 btn-action rounded-pill">Marcar como Asistida</button>
+                    </form>
                 </div>
-                {% endif %}
+            </div>
 
+            <div class="card admin-card shadow-sm border-danger">
+                <div class="card-body p-4 text-center">
+                    <div class="text-danger mb-2"><i class="fa fa-times-circle fa-2x"></i></div>
+                    <h6 class="fw-bold mb-3 text-danger">Cancelar Cita</h6>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="accion" value="cancelar_cita">
+                        <input type="number" class="form-control mb-2 rounded-pill text-center" name="id_cita_cancelar" placeholder="Ingrese el ID de Cita" required>
+                        <button type="submit" class="btn btn-outline-danger w-100 btn-action rounded-pill">Confirmar Cancelación</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
+        <div class="col-lg-8">
+            
+            {% if agenda %}
+            <div class="table-container shadow-sm border mb-5">
+                <div class="p-3 text-white fw-bold d-flex align-items-center" style="background-color: #2c3e50;">
+                    <i class="fa fa-list-ul me-2"></i> Agenda del Día
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-3">ID</th>
+                                <th>Hora</th>
+                                <th>Paciente</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cita in agenda %}
+                            <tr>
+                                <td class="ps-3"><span class="badge badge-id">#{{ cita.0 }}</span></td>
+                                <td class="fw-bold text-primary">{{ cita.1 }}</td>
+                                <td>{{ cita.2 }}</td>
+                                <td>
+                                    <span class="badge rounded-pill badge-status {% if cita.5 == 'completada' %}bg-success{% elif cita.5 == 'cancelada' %}bg-danger{% else %}bg-warning text-dark{% endif %}">
+                                        {{ cita.5|upper }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if datos_paciente %}
+            <div class="card admin-card shadow-sm mb-4 border-start border-success border-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="fw-bold text-success mb-0"><i class="fa fa-user-circle me-2"></i> Información Personal</h4>
+                        <span class="badge bg-success rounded-pill px-3 py-2">Registrado: {{ datos_paciente.5 }}</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <span class="fw-bold d-block mb-1">Nombre Completo</span>
+                            <span>{{ datos_paciente.0 }}</span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <span class="fw-bold d-block mb-1">Documento</span>
+                            <span>{{ datos_paciente.1 }}</span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <span class="fw-bold d-block mb-1">WhatsApp</span>
+                            <a href="https://wa.me/57{{ datos_paciente.3 }}" target="_blank" class="text-success text-decoration-none fw-bold">
+                                <i class="fa fa-whatsapp"></i> {{ datos_paciente.3 }}
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <span class="fw-bold d-block mb-1">Email</span>
+                            <span>{{ datos_paciente.4 }}</span>
+                        </div>
+                        <div class="col-12">
+                            <span class="fw-bold d-block mb-1">Dirección</span>
+                            <span><i class="fa fa-map-marker text-danger me-1"></i> {{ datos_paciente.2 }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container shadow-sm border mb-4">
+                <div class="p-3 text-white fw-bold d-flex align-items-center" style="background-color: #198754;">
+                    <i class="fa fa-history me-2"></i> Historial de Citas del Paciente
+                </div>
+                {% if citas_paciente %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-4">ID</th>
+                                <th>Fecha</th>
+                                <th>Tratamiento</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for c in citas_paciente %}
+                            <tr>
+                                <td class="ps-4"><span class="badge badge-id">#{{ c.0 }}</span></td>
+                                <td>{{ c.1 }}</td>
+                                <td>{{ c.3 }}</td>
+                                <td>
+                                    <span class="badge rounded-pill badge-status {% if c.4 == 'completada' %}bg-success{% elif c.4 == 'cancelada' %}bg-danger{% else %}bg-warning text-dark{% endif %}">
+                                        {{ c.4|upper }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="p-4 text-center text-muted">Este paciente no registra citas previas.</div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if not agenda and not datos_paciente %}
+            <div class="text-center py-5">
+                <img src="{% static 'inicio/Logoeclident.png' %}" alt="Logo" style="opacity: 0.1; filter: grayscale(1); max-width: 180px;" class="mb-4">
+                <h5 class="text-muted">Panel de Control Eclident</h5>
+                <p class="text-secondary small">Seleccione una opción en el menú lateral para gestionar la clínica.</p>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
 {% endblock %}
