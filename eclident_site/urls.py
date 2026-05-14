@@ -9,7 +9,7 @@ from django.conf.urls.static import static
 
 # ¡Agregamos panel_recepcion a la lista de importaciones!
 from inicio.views import hola_mundo, vista_agenda, panel_recepcion, login_view, google_login_custom, usuario_perfil, recuperar_contrasena, logout_view
-
+from inicio.views import api_horas_disponibles 
 urlpatterns = [
    path('admin/', admin.site.urls),
     path('', hola_mundo, name='inicio'), 
@@ -27,7 +27,8 @@ urlpatterns = [
     path('contacto/', views.contacto, name='contacto'),
     path('politicas/', views.politicas, name='politicas'),
     path('terminos/', views.terminos, name='terminos'),
-    path('Nosotros/', views.nosotros, name='nosotros')
+    path('Nosotros/', views.nosotros, name='nosotros'),
+    path('api/horas/', api_horas_disponibles, name='api_horas')
 ]
  
 if settings.DEBUG:

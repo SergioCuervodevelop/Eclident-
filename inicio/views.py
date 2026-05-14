@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from .models import Post, UsuarioGoogle
+from django.contrib.admin.views.decorators import staff_member_required
+from django.http import JsonResponse
 # Importamos todas las funciones necesarias de tu "Cerebro"
 from .logica_agendamiento import (
     obtener_espacios_dia, 
@@ -17,8 +19,9 @@ from .logica_agendamiento import (
     consultar_agenda_dia, 
     obtener_citas_paciente, 
     cancelar_cita,
-    completar_cita,       # Nueva función para marcar asistencia
-    obtener_datos_paciente # Nueva función para detalles del paciente
+    completar_cita,
+    obtener_datos_paciente,
+    obtener_paciente_por_email 
 )
 
 def hola_mundo(request):
@@ -33,32 +36,56 @@ def google_login_custom(request):
     """Página de login de Google personalizada con nuestros estilos"""
     return render(request, 'inicio/google_login.html')
 
+
 def login_view(request):
-    """Maneja la página de login y autentica usuarios."""
+    """Maneja la página de login y el registro de nuevos usuarios."""
     mensaje = None
     tipo_mensaje = None
     
     if request.method == 'POST':
+        # Buscamos qué botón presionó el usuario (login o registro)
+        accion = request.POST.get('accion', 'login') # Por defecto asume login
         email = request.POST.get('email')
         password = request.POST.get('password')
         
-        # Validar que los campos no estén vacíos
         if not email or not password:
             mensaje = "❌ Por favor completa todos los campos"
             tipo_mensaje = 'error'
         else:
-            # Intentar autenticar
-            try:
-                user = authenticate(request, username=email, password=password)
-                if user is not None:
-                    login(request, user)
-                    return redirect('usuario_perfil')
-                else:
-                    mensaje = "❌ Email o contraseña incorrectos"
+            # 🟢 CAMINO 1: EL USUARIO SE ESTÁ REGISTRANDO
+            if accion == 'registro':
+                # Revisamos si el correo ya existe para no duplicarlo
+                if User.objects.filter(username=email).exists():
+                    mensaje = "❌ Ya existe una cuenta con este correo"
                     tipo_mensaje = 'error'
-            except Exception as e:
-                mensaje = f"❌ Error al iniciar sesión: {str(e)}"
-                tipo_mensaje = 'error'
+                else:
+                    try:
+                        # LA MAGIA: create_user guarda la contraseña encriptada de forma segura
+                        nuevo_usuario = User.objects.create_user(
+                            username=email, 
+                            email=email, 
+                            password=password
+                        )
+                        nuevo_usuario.save()
+                        mensaje = "✅ ¡Registro exitoso! Ya puedes iniciar sesión con tu cuenta."
+                        tipo_mensaje = 'success'
+                    except Exception as e:
+                        mensaje = f"❌ Error al crear la cuenta: {str(e)}"
+                        tipo_mensaje = 'error'
+
+            # 🔵 CAMINO 2: EL USUARIO ESTÁ INICIANDO SESIÓN (Tu código original)
+            elif accion == 'login':
+                try:
+                    user = authenticate(request, username=email, password=password)
+                    if user is not None:
+                        login(request, user)
+                        return redirect('usuario_perfil')
+                    else:
+                        mensaje = "❌ Email o contraseña incorrectos"
+                        tipo_mensaje = 'error'
+                except Exception as e:
+                    mensaje = f"❌ Error al iniciar sesión: {str(e)}"
+                    tipo_mensaje = 'error'
 
     return render(request, 'inicio/Login.html', {'mensaje': mensaje, 'tipo_mensaje': tipo_mensaje})
 
@@ -136,14 +163,34 @@ def recuperar_contrasena(request):
     
     return render(request, 'inicio/recuperar_contrasena.html', contexto)
 
+@login_required(login_url='login')
 def vista_agenda(request):
-    """Maneja la página de agendamiento con Inteligencia"""
+    """
+    Maneja la lógica de agendamiento inteligente.
+    - Autocompleta datos desde el perfil de Google o historial clínico.
+    - Valida disponibilidad de horarios dinámicamente.
+    - Protege contra citas en fechas pasadas.
+    """
     mensaje = None
     exito = False
+    datos_previos_clinica = None
+    google_profile = None
 
-    # Cargar todos los tratamientos para el selector del formulario
+    # 1. RECUPERACIÓN DE DATOS (Para autocompletar el formulario)
+    if request.user.is_authenticated:
+        # Buscamos si el correo ya tiene historial registrado en la clínica (Cédula, Celular, Dirección)
+        datos_previos_clinica = obtener_paciente_por_email(request.user.email)
+        
+        # Intentamos obtener el perfil de Google para el nombre completo
+        try:
+            google_profile = request.user.google_profile
+        except Exception:
+            google_profile = None
+
+    # Cargamos siempre la lista de tratamientos para el selector
     todos_los_tratamientos = buscar_tratamiento("")
 
+    # 2. PROCESAMIENTO DEL FORMULARIO (Cuando el usuario hace clic en Confirmar)
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
         cedula = request.POST.get('cedula')
@@ -154,60 +201,49 @@ def vista_agenda(request):
         hora = request.POST.get('hora')
         id_servicio = request.POST.get('tratamiento_id')
 
-        # 1. Validar que no se agenden citas en el pasado
+        # A. Validación: No permitir fechas pasadas
         try:
             fecha_obj = datetime.strptime(fecha, "%Y-%m-%d").date()
-            hoy = datetime.now().date()
-            if fecha_obj < hoy:
+            if fecha_obj < datetime.now().date():
+                mensaje = "❌ Error: No puedes agendar citas en fechas que ya pasaron."
                 return render(request, 'inicio/agenda.html', {
-                    'mensaje': "❌ Error: No puedes agendar citas en fechas pasadas.", 
+                    'mensaje': mensaje, 
                     'exito': False,
-                    'tratamientos': todos_los_tratamientos
+                    'tratamientos': todos_los_tratamientos,
+                    'datos_previos': datos_previos_clinica,
+                    'google_profile': google_profile
                 })
         except (ValueError, TypeError):
             pass
 
-        # 2. Validar disponibilidad de horarios
+        # B. Validación: Verificar disponibilidad real del horario seleccionado
         espacios_teoricos = obtener_espacios_dia(fecha)
         if not espacios_teoricos or "Error" in espacios_teoricos[0]:
-            return render(request, 'inicio/agenda.html', {
-                'mensaje': "❌ Día no disponible o clínica cerrada. Intenta otra fecha.", 
-                'exito': False,
-                'tratamientos': todos_los_tratamientos
-            })
+            mensaje = "❌ El día seleccionado no está disponible o la clínica se encuentra cerrada."
+        else:
+            # Filtramos los espacios que realmente están libres en la base de datos
+            espacios_reales = filtrar_espacios_ocupados(fecha, 1, espacios_teoricos)
             
-        espacios_reales = filtrar_espacios_ocupados(fecha, 1, espacios_teoricos)
-        
-        if not espacios_reales:
-            return render(request, 'inicio/agenda.html', {
-                'mensaje': f"⚠️ Lo sentimos, la agenda del {fecha} está totalmente llena.", 
-                'exito': False,
-                'tratamientos': todos_los_tratamientos
-            })
+            if hora not in espacios_reales:
+                mensaje = f"⚠️ La hora {hora} se acaba de ocupar. Por favor, selecciona una de las horas disponibles."
+            else:
+                # C. Guardado Oficial: Registramos la cita en el sistema
+                exito_agenda, msj_agenda = agendar_cita_real(
+                    nombre, cedula, direccion, celular, correo, id_servicio, fecha, hora, 1
+                )
+                mensaje = msj_agenda
+                exito = exito_agenda
 
-        if hora not in espacios_reales:
-            horas_libres = " | ".join(espacios_reales)
-            mensaje_ayuda = f"❌ La hora {hora} está ocupada. Horas libres para el {fecha}: {horas_libres}"
-            return render(request, 'inicio/agenda.html', {
-                'mensaje': mensaje_ayuda, 
-                'exito': False,
-                'tratamientos': todos_los_tratamientos
-            })
-
-        # 3. Guardar la cita oficial
-        exito_agenda, msj_agenda = agendar_cita_real(
-            nombre, cedula, direccion, celular, correo, id_servicio, fecha, hora, 1
-        )
-        mensaje = msj_agenda
-        exito = exito_agenda
-
-    # El return render está fuera del bloque IF para que cargue siempre la página
+    # 3. RENDERIZADO FINAL
     return render(request, 'inicio/agenda.html', {
         'mensaje': mensaje, 
         'exito': exito,
-        'tratamientos': todos_los_tratamientos 
+        'tratamientos': todos_los_tratamientos,
+        'datos_previos': datos_previos_clinica, # Datos de la clínica (Cédula, Tel, Dir)
+        'google_profile': google_profile      # Datos de Google (Nombre completo)
     })
 
+@staff_member_required(login_url='inicio')
 def panel_recepcion(request):
     """Panel de control administrativo para la recepcionista"""
     agenda = None
@@ -304,5 +340,19 @@ def usuario_perfil(request):
         'google_profile': google_profile,
         'citas': citas,
     }
-    
+
+
     return render(request, 'inicio/Usuario.html', contexto)
+def api_horas_disponibles(request):
+    """Mini-API que devuelve las horas libres cuando el paciente elige una fecha"""
+    fecha = request.GET.get('fecha')
+    if not fecha:
+        return JsonResponse({'horas': []})
+
+    # Usamos tu cerebro de agendamiento
+    espacios_teoricos = obtener_espacios_dia(fecha)
+    if not espacios_teoricos or "Error" in espacios_teoricos[0]:
+        return JsonResponse({'horas': []})
+
+    espacios_reales = filtrar_espacios_ocupados(fecha, 1, espacios_teoricos)
+    return JsonResponse({'horas': espacios_reales})

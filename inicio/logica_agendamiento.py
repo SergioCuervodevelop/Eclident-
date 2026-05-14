@@ -238,3 +238,18 @@ def obtener_datos_paciente(cedula):
         return None
     finally:
         conexion.close()
+
+def obtener_paciente_por_email(email):
+    """Busca si un paciente ya existe en la base de datos de la clínica usando su correo"""
+    import sqlite3
+    conexion = sqlite3.connect(DB_PATH)
+    cursor = conexion.cursor()
+    try:
+        # Buscamos cédula, celular y dirección
+        cursor.execute("SELECT cedula, celular, direccion FROM Paciente WHERE correo = ?", (email,))
+        return cursor.fetchone() 
+    except Exception as e:
+        print(f"Error al buscar paciente: {e}")
+        return None
+    finally:
+        conexion.close()

@@ -1,94 +1,185 @@
 {% load static %}
 <!doctype html>
 <html lang="es">
-<!-- Template base para todas las páginas de Eclident -->
 <head>
-    <!-- Metadatos imprescindibles para el navegador -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Eclident - Clínica Dental{% endblock %}</title>
-    <!-- Enlaces a Bootstrap CSS y estilos personalizados -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{% static 'inicio/estilos/styles.css' %}" rel="stylesheet" />
     <link href="{% static 'inicio/estilos/Boton-log.css' %}" rel="stylesheet" />
     <link href="{% static 'inicio/estilos/Horario.css' %}" rel="stylesheet" />
     <link rel="icon" href="{% static 'inicio/favicon.ico' %}" type="image/x-icon">  
+    
+    <style>
+        /* Botón hamburguesa moderno */
+        .navbar-toggler-custom {
+            border: none;
+            background: #f8f9fa;
+            padding: 8px 16px;
+            border-radius: 50px;
+            color: #008ed6;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: background 0.3s;
+        }
+        .navbar-toggler-custom:hover { background: #e9ecef; }
+
+        /* Panel lateral (Offcanvas) */
+        .mobile-menu-premium {
+            position: fixed;
+            top: 0;
+            right: -100%; /* Oculto por defecto */
+            width: 300px;
+            max-width: 85vw;
+            height: 100vh;
+            background-color: #ffffff;
+            box-shadow: -5px 0 30px rgba(0,0,0,0.15);
+            z-index: 1050;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            border-top-left-radius: 25px;
+            border-bottom-left-radius: 25px;
+        }
+        .mobile-menu-premium.active { right: 0; }
+
+        /* Fondo oscuro detrás del menú */
+        .mobile-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(3px);
+            z-index: 1040;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease;
+        }
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Botón de cerrar y links */
+        .btn-close-menu {
+            align-self: flex-end;
+            width: 40px; height: 40px;
+            background: #f8f9fa;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #6c757d; font-size: 1.2rem; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-close-menu:hover { background: #fee2e2; color: #dc3545; }
+
+        .mobile-link {
+            text-decoration: none;
+            color: #495057;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex; align-items: center;
+            background: #f8f9fa;
+            transition: all 0.2s ease;
+        }
+        .mobile-link i { width: 30px; color: #008ed6; font-size: 1.2rem; }
+        .mobile-link:hover { background: #008ed6; color: white; }
+        .mobile-link:hover i { color: white; }
+
+        .mobile-footer-action {
+            margin-top: auto;
+            border-top: 1px solid #e9ecef;
+            padding-top: 20px;
+        }
+    </style>
+    
     {% block extra_head %}{% endblock %}
 </head>
 <body>
 
-    <!-- Barra de navegación principal con logo y menú -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="">
-                <img src="{% static 'inicio/Logoeclident.png' %}" alt="Eclident Logo" />
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'inicio/Logoeclident.png' %}" alt="Eclident Logo" style="max-height: 50px;" />
             </a>
 
-            <button class="navbar-toggler" id="mobileMenuToggle" aria-label="Abrir menú móvil">≡ Menú</button>
+            <button class="navbar-toggler-custom d-lg-none" id="mobileMenuToggle" aria-label="Abrir menú">
+                <i class="fa fa-bars me-1"></i> Menú
+            </button>
 
-            <div class="navbar-nav-custom">
-                <div class="nav-item-custom bg-azul">
-                    <a class="nav-link-custom" href="/">Inicio</a>
+            <div class="collapse navbar-collapse justify-content-end d-none d-lg-flex">
+                <div class="navbar-nav-custom">
+                    <div class="nav-item-custom bg-azul">
+                        <a class="nav-link-custom" href="/">Inicio</a>
+                    </div>
+                    <div class="nav-item-custom bg-rosado">
+                        <a class="nav-link-custom" href="/contacto/">Dirección</a>
+                    </div>
+                    <div class="nav-item-custom bg-naranja">
+                        <a class="nav-link-custom" href="/Nosotros/">Sobre Nosotros</a>
+                    </div>
+                    <div class="nav-item-custom">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'usuario_perfil' %}" class="boton-login" style="text-decoration: none !important; display: inline-flex; align-items: center; justify-content: center; transition: all 0.3s ease;" title="Mi Perfil">
+                                <i class="fa fa-user-circle" style="color: rgb(116, 192, 252); font-size: 2rem;"></i>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="boton-login" style="text-decoration: none !important;">Iniciar sesión</a>
+                        {% endif %}
+                    </div>  
                 </div>
-                <div class="nav-item-custom bg-rosado">
-                    <a class="nav-link-custom" href="/contacto/">Dirección</a>
-                </div>
-                <div class="nav-item-custom bg-naranja">
-                    <a class="nav-link-custom" href="/Nosotros/">Sobre Nosotros</a>
-                </div>
-                <div class="nav-item-custom">
-                    {% if user.is_authenticated %}
-                        <!-- Usuario autenticado: mostrar icono de perfil -->
-                        <a href="{% url 'usuario_perfil' %}" class="boton-login" style="text-decoration: none !important; display: inline-flex; align-items: center; justify-content: center; transition: all 0.3s ease;" aria-label="Ir a perfil">
-                            <i class="fa fa-user-circle" style="color: rgb(116, 192, 252); font-size: 2rem;"></i>
-                        </a>
-                    {% else %}
-                        <!-- Usuario no autenticado: mostrar botón de login -->
-                        <a href="{% url 'login' %}" class="boton-login" style="text-decoration: none !important;">Iniciar sesión</a>
-                    {% endif %}
-                </div>  
             </div>
         </div>  
     </nav>
 
-    <!-- Menú móvil desplegable para dispositivos pequeños -->
-    <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
-        <!-- Botón cerrar menú -->
-        <span class="mobile-close" id="mobileMenuClose">✕</span>
-        <div class="nav-item-custom bg-azul"><a class="nav-link-custom" href="/">Inicio</a></div>
-        <div class="nav-item-custom bg-rosado"><a class="nav-link-custom" href="/Direccion/">Dirección</a></div>
-        <div class="nav-item-custom bg-naranja"><a class="nav-link-custom" href="/Nosotros/">Sobre Nosotros</a></div>
-        <div class="nav-item-custom">
+    <div class="mobile-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu-premium" id="mobileMenuPremium">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <img src="{% static 'inicio/Logoeclident.png' %}" alt="Eclident" style="max-height: 40px;">
+            <div class="btn-close-menu" id="mobileMenuClose">
+                <i class="fa fa-times"></i>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column">
+            <a href="/" class="mobile-link"><i class="fa fa-home"></i> Inicio</a>
+            <a href="/contacto/" class="mobile-link"><i class="fa fa-map-marker"></i> Dirección</a>
+            <a href="/Nosotros/" class="mobile-link"><i class="fa fa-users"></i> Sobre Nosotros</a>
+        </div>
+
+        <div class="mobile-footer-action">
             {% if user.is_authenticated %}
-                <!-- Usuario autenticado: mostrar icono de perfil -->
-                <a href="{% url 'usuario_perfil' %}" class="login-icon-btn shadow-sm" aria-label="Ir a perfil" style="display: inline-flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
-                    <i class="fa fa-user-circle" style="color: rgb(116, 192, 252); font-size: 2.5rem;"></i>
+                <div class="text-center mb-3 text-muted small fw-bold">¡Hola, {{ user.first_name|default:user.username }}!</div>
+                <a href="{% url 'usuario_perfil' %}" class="btn btn-outline-primary w-100 rounded-pill fw-bold mb-2 py-2">
+                    <i class="fa fa-user-circle me-1"></i> Ir a mi perfil
+                </a>
+                <a href="{% url 'logout' %}" class="btn btn-light w-100 rounded-pill fw-bold text-danger py-2">
+                    <i class="fa fa-sign-out me-1"></i> Cerrar sesión
                 </a>
             {% else %}
-                <!-- Usuario no autenticado: mostrar icono de login -->
-                <a href="{% url 'login' %}" class="login-icon-btn shadow-sm" aria-label="Ir a login" style="color: #008ed6; width: 52px; height: 52px; display: inline-flex; align-items: center; justify-content: center;">
-                    <svg class="login-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="42" height="42" fill="#008ed6" style="display: block; width: 42px; height: 42px; color: #008ed6;" aria-hidden="true" focusable="false">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#008ed6"/>
-                    </svg>
+                <p class="text-center text-muted small fw-bold mb-3">Accede a tus beneficios</p>
+                <a href="{% url 'login' %}" class="btn btn-primary w-100 rounded-pill fw-bold py-2 shadow-sm" style="background: linear-gradient(135deg, #008ed6 0%, #0311d1 100%); border: none;">
+                    <i class="fa fa-sign-in me-1"></i> Iniciar Sesión
                 </a>
             {% endif %}
         </div>
     </div>
 
-    <!-- Contenido principal de la página -->
     {% block content %}{% endblock %}
 
-    <!-- Footer profesional con información de contacto, horarios y redes sociales -->
     <footer class="footer-section">
       <div class="container">
-        
         <div class="row gy-4">
           <div class="col-lg-4">
             <h3 class="footer-title">Eclident</h3>
             <p class="footer-text">Clínica dental especializada en tratamientos seguros, tecnología avanzada y una experiencia cercana para cada paciente.</p>
           </div>
-
           <div class="col-lg-4">
             <h5 class="footer-subtitle">Horario de atención</h5>
             <ul class="footer-list list-unstyled">
@@ -100,7 +191,6 @@
               <li class="dia-horario" data-day="6">Sábado: 08:00 - 12:00</li>
             </ul>
           </div>
-
           <div class="col-lg-4">
             <h5 class="footer-subtitle">Contáctanos</h5>
             <p class="footer-contact mb-2"><strong>Dirección:</strong> Calle 39 # 7 - 107, Neiva, Colombia</p>
@@ -124,7 +214,7 @@
                 <path d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z"/>
               </svg>
             </a>
-            <a href="https://www.facebook.com/EclidentIPS/?viewas=&should_open_composer=false&show_switched_toast=false&show_invite_to_follow=false&show_switched_tooltip=false&show_podcast_settings=false&show_community_review_changes=false&show_community_rollback=false&show_follower_visibility_disclosure=false&bypass_exit_warning=true" class="footer-social-btn" aria-label="Facebook">
+            <a href="https://www.facebook.com/EclidentIPS/" class="footer-social-btn" aria-label="Facebook">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M16 8.5H13.5V7.5c0-0.6 0.4-1.5 1.5-1.5H17V2.5h-2.5C11.6 2.5 10 4 10 6.5V8.5H8v3h2v8h3.5v-8h2.3l0.3-3Z" stroke="currentColor" stroke-width="1.8" fill="none"/>
               </svg>
@@ -151,14 +241,30 @@
             <a href="{% url 'contacto' %}" class="footer-link">Contáctanos</a>
           </div>
         </div>
-        
       </div> 
     </footer>
 
-    <!-- Scripts JavaScript para funcionalidades interactivas -->
     <script src="{% static 'inicio/js/scripts.js' %}"></script>
     <script src="{% static 'inicio/js/Horario.js' %}"></script>
-    {% block extra_scripts %}{% endblock %}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnOpen = document.getElementById('mobileMenuToggle');
+            const btnClose = document.getElementById('mobileMenuClose');
+            const menu = document.getElementById('mobileMenuPremium');
+            const overlay = document.getElementById('mobileMenuOverlay');
 
+            function toggleMenu() {
+                menu.classList.toggle('active');
+                overlay.classList.toggle('active');
+            }
+
+            if(btnOpen) btnOpen.addEventListener('click', toggleMenu);
+            if(btnClose) btnClose.addEventListener('click', toggleMenu);
+            if(overlay) overlay.addEventListener('click', toggleMenu);
+        });
+    </script>
+
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>
