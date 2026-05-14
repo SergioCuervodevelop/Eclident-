@@ -1,13 +1,10 @@
 from datetime import datetime
-<<<<<<< HEAD
 from django.shortcuts import render, redirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-=======
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
->>>>>>> 729995f02d7fb07293101f00972f12a51ff9fcb7
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from .models import Post, UsuarioGoogle
@@ -282,7 +279,6 @@ def terminos(request):
     """Muestra la página de términos y condiciones"""
     return render(request, 'inicio/terminos.html')
 
-<<<<<<< HEAD
 
 def logout_view(request):
     """Cierra sesión del usuario y redirige a inicio"""
@@ -290,8 +286,6 @@ def logout_view(request):
     return redirect('inicio')
 
 
-=======
->>>>>>> 729995f02d7fb07293101f00972f12a51ff9fcb7
 @login_required(login_url='login')
 def usuario_perfil(request):
     """Muestra el perfil del paciente autenticado con datos de Google"""
