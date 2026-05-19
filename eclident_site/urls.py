@@ -27,7 +27,7 @@ urlpatterns = [
     path('contacto/', views.contacto, name='contacto'),
     path('politicas/', views.politicas, name='politicas'),
     path('terminos/', views.terminos, name='terminos'),
-    path('Nosotros/', views.nosotros, name='nosotros'),
+    path('nosotros/', views.nosotros, name='nosotros'),
     path('api/horas/', api_horas_disponibles, name='api_horas')
 ]
  
